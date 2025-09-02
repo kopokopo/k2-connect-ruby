@@ -1,19 +1,19 @@
 --- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
-version: v1
 base_url: https://sandbox.kopokopo.com/
 endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   oauth_token: oauth/token
   revoke_token: oauth/revoke
   introspect_token: oauth/introspect
   token_info: oauth/token/info
-  webhook_subscriptions: webhook_subscriptions
-  pay_recipient: pay_recipients
-  payments: payments
-  incoming_payments: incoming_payments
-  settlement_mobile_wallet: merchant_wallets
-  settlement_bank_account: merchant_bank_accounts
-  transfers: settlement_transfers
-  poll: polling
-  transaction_sms_notifications: transaction_sms_notifications
+  webhook_subscriptions: api/v1/webhook_subscriptions
+  pay_recipient: api/v1/pay_recipients
+  payments: api/v1/payments
+  send_money: api/v2/send_money
+  incoming_payments: api/v1/incoming_payments
+  settlement_mobile_wallet: api/v1/merchant_wallets
+  settlement_bank_account: api/v1/merchant_bank_accounts
+  transfers: api/v1/settlement_transfers
+  poll: api/v1/polling
+  transaction_sms_notifications: api/v1/transaction_sms_notifications
 network_operators:
 - SAFARICOM

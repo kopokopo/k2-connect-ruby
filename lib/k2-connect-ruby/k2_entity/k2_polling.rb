@@ -1,32 +1,43 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Entity
     class K2Polling
-      include K2ConnectRuby::K2Utilities::K2Validation, K2ConnectRuby::K2Utilities
+      include K2ConnectRuby::K2Utilities
       attr_reader :location_url, :k2_response_body
       attr_accessor :access_token
 
       # Initialize with access token
       def initialize(access_token)
-        raise ArgumentError, 'Nil or Empty Access Token Given!' if access_token.blank?
+        raise ArgumentError, "Nil or Empty Access Token Given!" if access_token.blank?
+
         @access_token = access_token
       end
 
       def poll(params)
-        k2_request_body = {
-          scope: params[:scope],
-          scope_reference: params[:scope_reference],
-          from_time: params[:from_time],
-          to_time: params[:to_time],
-          _links: { callback_url: params[:callback_url] }
-        }
-        poll_hash = make_hash(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('poll'), 'post', @access_token,'Polling', k2_request_body)
-        @location_url =  K2ConnectRuby::K2Utilities::K2Connection.make_request(poll_hash)
+        polling_request = K2ConnectRuby::K2Entity::K2FinancialEntities::Polling::PollingRequest.new(params)
+        raise(ArgumentError, polling_request.errors.full_messages.first) unless polling_request.valid?
+
+        result = K2ConnectRuby::K2Services::SendK2ConnectPostRequestService.call(
+          access_token,
+          polling_request.endpoint,
+          polling_request.request_body,
+        )
+        if result.success?
+          @location_url = result.data[:response_headers][:location]
+        else
+          raise(result.errors.first)
+        end
       end
 
       # Retrieve your newly created polling request by its resource location
       def query_resource(location_url = @location_url)
-        query_hash = make_hash(location_url, 'get', @access_token, 'Polling', nil)
-        @k2_response_body = K2ConnectRuby::K2Utilities::K2Connection.make_request(query_hash)
+        result = K2ConnectRuby::K2Services::SendK2ConnectGetRequestService.call(access_token, location_url)
+        if result.success?
+          @k2_response_body = result.data[:response_body]
+        else
+          raise(result.errors.first)
+        end
       end
 
       # Retrieve your newly created polling request by specific resource location
