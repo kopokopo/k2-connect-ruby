@@ -63,6 +63,8 @@ build-iPhoneSimulator/
 # rubocop
 rubocop.html
 tmp
+.rubocop.yml
+.rubocop-https---shopify-github-io-ruby-style-guide-rubocop-yml
 
 # rubocop
 rubocop.html

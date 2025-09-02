@@ -1,34 +1,44 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Entity
     class K2Subscribe
-      include K2ConnectRuby::K2Utilities::K2Validation, K2ConnectRuby::K2Utilities
+      include K2ConnectRuby::K2Utilities
       attr_reader :location_url, :k2_response_body
       attr_accessor :access_token, :webhook_secret
 
       # Initialize with access token
       def initialize(access_token)
-        raise ArgumentError, 'Nil or Empty Access Token Given!' if access_token.blank?
+        raise ArgumentError, "Nil or Empty Access Token Given!" if access_token.blank?
+
         @access_token = access_token
       end
 
       # Implemented a Case condition that minimises repetition
       def webhook_subscribe(params)
-        params = validate_webhook_input(params)
-        validate_webhook(params)
-        k2_request_body = {
-          event_type: params[:event_type],
-          url: params[:url],
-          scope: params[:scope],
-          scope_reference: params[:scope_reference]
-        }
-        subscribe_hash = make_hash(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('webhook_subscriptions'), 'post', @access_token,'Subscription', k2_request_body)
-        @location_url =  K2ConnectRuby::K2Utilities::K2Connection.make_request(subscribe_hash)
+        webhook_subscription_request = K2ConnectRuby::K2Entity::K2FinancialEntities::Webhook::WebhookSubscriptionRequest.new(params)
+        raise(ArgumentError, webhook_subscription_request.errors.full_messages.first) unless webhook_subscription_request.valid?
+
+        result = K2ConnectRuby::K2Services::SendK2ConnectPostRequestService.call(
+          access_token,
+          webhook_subscription_request.endpoint,
+          webhook_subscription_request.request_body,
+        )
+        if result.success?
+          @location_url = result.data[:response_headers][:location]
+        else
+          raise(result.errors.first)
+        end
       end
 
       # Query Recent Webhook
       def query_webhook(location_url = @location_url)
-        query_hash = make_hash(location_url, 'get', @access_token, 'Subscription', nil)
-        @k2_response_body = K2ConnectRuby::K2Utilities::K2Connection.make_request(query_hash)
+        result = K2ConnectRuby::K2Services::SendK2ConnectGetRequestService.call(access_token, location_url)
+        if result.success?
+          @k2_response_body = result.data[:response_body]
+        else
+          raise(result.errors.first)
+        end
       end
 
       # Query Specific Webhook URL

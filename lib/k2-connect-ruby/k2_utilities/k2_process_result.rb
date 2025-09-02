@@ -1,30 +1,27 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Utilities
     module K2ProcessResult
       extend self
 
       def process(payload, secret_key, signature)
-        raise ArgumentError, 'Empty/Nil Request Body Argument!' if payload.blank?
+        raise ArgumentError, "Empty/Nil Request Body Argument!" if payload.blank?
+
         check_type(payload) if K2ConnectRuby::K2Utilities::K2Authenticator.authenticate(payload, secret_key, signature)
       end
 
       # Check the Event Type.
       def check_type(payload)
-        result_type = payload.dig('data', 'type')
+        result_type = payload.dig("data", "type")
         case result_type
           # Incoming Payments
-        when 'incoming_payment'
-          incoming_payments = K2ConnectRuby::K2Services::Payloads::Transactions::IncomingPayment.new(payload)
-          return incoming_payments
-          # Outgoing Payments
-        when 'payment'
-          outgoing_payments = K2ConnectRuby::K2Services::Payloads::Transactions::OutgoingPayment.new(payload)
-          return outgoing_payments
-        when 'settlement_transfer'
-          transfer = K2ConnectRuby::K2Services::Payloads::Transactions::Transfer.new(payload)
-          return transfer
+        when "incoming_payment"
+          K2ConnectRuby::K2Services::Payloads::Transactions::IncomingPayment.new(payload)
+        when "send_money"
+          K2ConnectRuby::K2Services::Payloads::Transactions::SendMoneyPayment.new(payload)
         else
-          raise ArgumentError, 'No Other Specified Payment Type!'
+          raise ArgumentError, "No Other Specified Payment Type!"
         end
       end
 

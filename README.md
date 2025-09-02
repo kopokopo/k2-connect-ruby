@@ -9,7 +9,7 @@ Primarily, the library provides functionality to do the following:
  - Receive Webhook notifications.
  - Receive payments from your users/customers.
  - Initiate payments to third parties.
- - Initiate transfers to your settlement accounts.
+ - Initiate transfers to your preferred accounts.
  
 The library is optimized for **Rails Based Frameworks**.
 Please note, all requests MUST be made over HTTPS.
@@ -22,11 +22,10 @@ All calls made without authentication will also fail.
  - [Usage](#installation)
     - [Authorization](#authorization)
     - [Webhook Subscription](#webhook-subscription)
-    - [SMS Notifications](#sms-notifications)
     - [STK Push](#stk-push)
-    - [PAY](#pay)
-    - [Settlemennt accounts](#settlement-accounts)
-    - [Transfers](#transfers)
+    - [Add External recipients](#add-external-recipients)
+    - [Add Transfer accounts](#add-transfer-accounts)
+    - [Send money](#send-money)
     - [Polling](#polling)
     - [Parsing the JSON Payload](#parsing-the-json-payload)
  - [Development](#development)
@@ -59,14 +58,20 @@ Add the require line to use the gem:
 To set the base_url:
 
 ```ruby
-K2ConnectRuby::K2Utilities::Config::K2Config.set_base_url("https://sandbox.kopokopo.com/")
+K2ConnectRuby::K2Utilities::Config::K2Config.base_url("https://sandbox.kopokopo.com/")
 ```
 
 To set the api version:
 
 ```ruby
-K2ConnectRuby::K2Utilities::Config::K2Config.set_version(1)
+K2ConnectRuby::K2Utilities::Config::K2Config.version(2)
 ```
+
+> [!WARNING]
+> The following APIs are deprecated on version 2 (v2).
+> - Pay (Replaced with Send money)
+> - Transfers (Replaced with Send money)
+> - SMS Notifications
 
 ### Authorization
 
@@ -78,7 +83,7 @@ For more Information, visit our [API docs]().
 In order to request for application authorization and receive an access token, we need to execute the client credentials flow, this is done so by having your application server make a HTTPS request to the Kopo Kopo authorization server, through the K2AccessToken class.
 
 ```ruby
-k2_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
+access_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
 ```
 
 ### Webhook Subscription
@@ -89,8 +94,16 @@ Next, we formally create the webhook subscription by calling on the webhook_subs
 Ensure the following arguments are passed: 
  - event type `REQUIRED`
  - url `REQUIRED`
- - scope `REQUIRED`: is `till` if event_type is a buygoods_transaction_received, buygoods_transaction_reversed or b2b_transaction_received, and `company` if not
+ - scope `REQUIRED`: is `till` if event_type is a buygoods_transaction_received, buygoods_transaction_reversed, b2b_transaction_received, card_transaction_received, card_transaction_voided or card_transaction_reversed and `company` if not
  - scope reference: is `REQUIRED` if scope is till
+
+Supported event types:
+- buygoods_transaction_received
+- buygoods_transaction_reversed
+- b2b_transaction_received
+- card_transaction_received
+- card_transaction_voided
+- card_transaction_reversed
  
 Code example;
 
@@ -107,32 +120,10 @@ your_request = {
 k2subscriber.webhook_subscribe(your_request)
 ```
 
-### SMS Notifications
-
-To create an SMS notification request by calling on the send_sms_transaction_notification method.
-Ensure the following arguments are passed:
-- webhook_event_reference `REQUIRED`
-- message `REQUIRED`
-- callback_url `REQUIRED`
-
-Code example;
-
-```ruby
-require 'k2-connect-ruby'
-k2_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
-k2_notification = K2ConnectRuby::K2Entity::K2Notification.new(k2_token)
-request_payload = {
-  webhook_event_reference: 'c271535c-687f-4a40-a589-8b66b894792e',
-  message: 'message',
-  callback_url: 'callback_url'
-}
-k2_notification.send_sms_transaction_notification(request_payload)
-```
-
  
 ### STK-Push
  
- #### Receive Payments
+#### Receive Payments
  
  To receive payments from M-PESA users via STK Push we first create a K2Stk Object, passing the access_token that was created prior.
  
@@ -140,7 +131,7 @@ k2_notification.send_sms_transaction_notification(request_payload)
   
  Afterwards we send a POST request for receiving Payments by calling the following method and passing the params value received from the POST Form Request: 
 
-    k2_stk.receive_mpesa_payments(your_input)
+    k2_stk.send_stk_request(your_input)
     
 Ensure the following arguments are passed:
  - payment_channel `REQUIRED`
@@ -183,22 +174,19 @@ your_request = {
         value: stk_params[:value],
         callback_url: callback_url
 }
-k2_stk.receive_mpesa_payments(your_request)
+k2_stk.send_stk_request(your_request)
 k2_stk.query_resource(k2_stk.location_url)
 ```
 
-### PAY
+### Add External Recipients
 
-First Create the K2Pay Object passing the access token
+First Create the `ExternalRecipient` Object passing the access token
 
+    external_recipient = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
 
-    k2_pay = K2ConnectRuby::K2Entity::K2Pay.new(access_token)
+Add a external recipient, with the following arguments:
 
-#### Add PAY Recipients
-
-Add a PAY Recipient, with the following arguments:
-
-**Mobile** PAY Recipient
+**Mobile** External Recipient
 - type: 'mobile_wallet' `REQUIRED`
 - first_name `REQUIRED`
 - last_name `REQUIRED`
@@ -206,182 +194,220 @@ Add a PAY Recipient, with the following arguments:
 - email `REQUIRED`
 - network `REQUIRED`
 
-**Bank** PAY Recipient
+**Bank** External Recipient
 - type: 'bank_account' `REQUIRED`
 - account_name `REQUIRED`
 - account_number `REQUIRED`
 - bank_branch_ref `REQUIRED`
-- settlement_method: 'EFT' or 'RTS' `REQUIRED`
 
-**Paybill** PAY Recipient
+**Paybill** External Recipient
 - type: 'paybill' `REQUIRED`
 - paybill_name `REQUIRED`
 - paybill_number `REQUIRED`
 - paybill_account_number `REQUIRED`
 
-**Till** PAY Recipient
+**Till** External Recipient
 - type: 'till' `REQUIRED`
 - till_name `REQUIRED`
 - till_number `REQUIRED`
 
 ```ruby
-k2_pay.add_recipients(your_input)
+external_recipient = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
+external_recipient.add_external_recipient(your_input)
 ```
-    
-The type value can either be `mobile_wallet` or `bank_account`
+
+The type value can be `mobile_wallet`, `bank_account`, `till` or `paybill`
 
 A Successful Response is returned with the URL of the recipient resource.
 
-#### Create Outgoing Payment
+#### Query add ExternalRecipient Request Status
 
-Creating an Outgoing Payment to a third party.
+To Query the status of the Add Recipient:
 
-    k2_pay.create_payment(your_input)
-    
-The following arguments should be passed within a hash:
+    external_recipient.query_resource(external_recipient.recipients_location_url)
 
-- destination_reference `REQUIRED`
-- destination_type `REQUIRED`
-- currency default is `KES`
-- value `REQUIRED`
-- description `REQUIRED`
-- category
-- tags
-- callback_url `REQUIRED`
+To Query the most recent status of the Add Recipient:
 
-A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
+    external_recipient.query_status
 
-#### Query PAY Request Status
+A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
-To Query the status of the Add Recipient or Outgoing Payment request:
-
-    // add recipient
-    k2_pay.query_resource(k2_pay.recipients_location_url)
-    // create outgoing payment 
-    k2_pay.query_resource(k2_pay.payments_location_url)
-
-To Query the most recent status of either the Add Recipient or Outgoing Payment request:
-
-    // add recipient
-    k2_pay.query_status('recipients')
-    // create outgoing payment 
-    k2_pay.query_status('payments')
-
-As a result a JSON payload will be returned, accessible with the k2_response_body variable.
- 
 Code example;
-    
+
 ```ruby
-k2_pay = K2ConnectRuby::K2Entity::K2Pay.new(your_access_token)
-k2_pay.add_recipient(your_recipient_input)
-k2_pay.query_resource(k2_pay.recipients_location_url)
-
-your_request = {
-        destination_type: "mobile_wallet",
-        destination_reference: "example_reference",
-        amount: {
-                "currency": "KES",
-                "value": "500"
-        },
-        description: "k2-connect",
-        category: "general",
-        tags: ["tag_1", "tag_2"],
-        metadata: {
-                "something": "",
-                "something_else": "Something else"
-        },
-        _links: { "callback_url": "https://example.site/example" }
-}
-
-k2_pay.create_payment(your_request)
-k2_pay.query_resource(k2_pay.payments_location_url)
+external_recipient = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
+external_recipient.add_external_recipient(your_input)
+external_recipient.query_resource(external_recipient.recipients_location_url)
 ```
 
-### Settlement Accounts
+### Add Transfer Accounts
 
-Add pre-approved settlement accounts, to which one can transfer funds to. Can be either a bank or mobile wallet account,
- with the following details:
+Add pre-approved transfer accounts, to which one can transfer funds to. Can be either a bank or mobile wallet account,
+with the following details:
 
-**Mobile** Settlement Account
+**Mobile** Transfer Account
 - type: 'merchant_wallet' `REQUIRED`
 - first_name `REQUIRED`
 - last_name `REQUIRED`
 - phone_number `REQUIRED`
 - network: 'Safaricom' `REQUIRED`
+- nickname
+- email
 
-**Bank** Settlement Account
+**Bank** Transfer Account
 - type: 'merchant_bank_account' `REQUIRED`
 - account_name `REQUIRED`
 - account_number `REQUIRED`
 - bank_branch_ref `REQUIRED`
 - settlement_method: 'EFT' or 'RTS' `REQUIRED`
+- nickname
 
 ```ruby
-k2_settlement = K2ConnectRuby::K2Entity::K2Settlement.new(your_access_token)
+transfer_account = K2ConnectRuby::K2Entity::TransferAccount.new(your_access_token)
 # Add a mobile merchant wallet
-k2_settlement.add_settlement_account(merchant_wallet)
+merchant_wallet_params = {
+  type: "merchant_wallet",
+  first_name: "first_name",
+  last_name: "last_name",
+  email: "email@email.com",
+  phone_number: "phone_number",
+  nickname: "nickname",
+}
+transfer_account.add_transfer_account(merchant_wallet_params)
 # Add a merchant bank account
-k2_settlement.add_settlement_account(merchant_bank_account)
+merchant_bank_account_params = {
+  type: "merchant_bank_account",
+  account_name: Faker::Name.name_with_middle,
+  account_number: Faker::Number.number(digits: 10),
+  bank_branch_ref: Faker::Internet.uuid,
+  settlement_method: "EFT",
+  nickname: Faker::Name.name_with_middle,
+}
+transfer_account.add_transfer_account(merchant_bank_account_params)
 ```
 
-### Transfers
+A Successful Response is returned with the URL of the resource.
 
-This will Enable one to transfer funds to your settlement accounts.
+#### Query add transfer account Request Status
 
-First Create the K2Transfer Object
+To Query the status of the Add Transfer account:
 
-    k2_transfers =  K2ConnectRuby::K2Entity::K2Transfer.new(access_token)
+    transfer_account.query_resource(transfer_account.transfer_account_location_url)
 
-#### Create Transfer Request
+To Query the most recent status of the Add Transfer account:
 
-One can either have it `blind`, meaning that it has no specified destination with the default/specified settlement account being selected, 
-or one can have a `targeted` transfer with a specified settlement account in mind. Either can be done through:
-
-##### Blind Transfer
-
-     k2_transfers.transfer_funds(params)
-
-With `nil` representing that there are no specified destinations.
-
-##### Target Transfer
-
-     k2_transfers.transfer_funds(params)
-      
-The Following Details should be passed for either **Blind** or **Targeted** Transfer:
-
-**Blind** Transfer to your default settlement account
-- currency default is `KES`
-- value `REQUIRED`
-- callback_url `REQUIRED`
-
-**Targeted** Transfer
-- destination_reference `REQUIRED`
-- destination_type: `merchant_wallet` or `merchant_bank_account` `REQUIRED`
-- currency default is `KES`
-- value `REQUIRED`
-- callback_url `REQUIRED`
-
-The Params are passed as the argument containing all the form data sent. A Successful Response is returned with the URL of the transfer request in the HTTP Location Header.
-
-Sample code example:
-
-```ruby
-k2_transfer =  K2ConnectRuby::K2Entity::K2Transfer.new(your_access_token)
-# Blind or Targeted Transfer
-k2_transfer.transfer_funds(your_input)
-```
-
-#### Query Prior Transfer
-
-To Query the status of the prior initiated Transfer Request pass the location_url response as shown:
-
-     k2_transfers.query_resource(k2_transfers.location_url)  
-
-To Query the most recent initiated Transfer Request:
-
-     k2_transfers.query_status  
+    transfer_account.query_status
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
+
+Code example;
+
+```ruby
+transfer_account = K2ConnectRuby::K2Entity::TransferAccount.new(your_access_token)
+transfer_account.add_transfer_account(your_input)
+transfer_account.query_resource(transfer_account.transfer_account_location_url)
+```
+
+### Send money
+
+First Create the `SendMoney` Object passing the access token
+
+    send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+
+Creating an Outgoing Payment to a third party.
+
+    send_money.create_payment(your_input)
+    
+The following arguments should be passed within a hash:
+
+- destinations (array of hashes) `REQUIRED`
+- currency default is `KES`
+- source_identifier
+- callback_url `REQUIRED`
+
+The hash structure within the destinations array:
+
+Send to **External Mobile Recipient**
+- type: 'mobile_wallet' `REQUIRED`
+- phone_number `REQUIRED`
+- amount `REQUIRED`
+- description `REQUIRED`
+- network `REQUIRED`
+- first_name
+- last_name
+- nickname
+
+Send to **External Bank account Recipient**
+- type: 'bank_account' `REQUIRED`
+- account_name `REQUIRED`
+- account_number `REQUIRED`
+- amount `REQUIRED`
+- description `REQUIRED`
+- bank_branch_ref `REQUIRED`
+- nickname
+
+Send to **External Paybill Recipient**
+- type: 'paybill' `REQUIRED`
+- paybill_number `REQUIRED`
+- paybill_account_number `REQUIRED`
+- paybill_name
+- description `REQUIRED`
+- nickname
+
+Send to **External Till Recipient**
+- type: 'till' `REQUIRED`
+- till_number `REQUIRED`
+- till_name
+- description `REQUIRED`
+- nickname
+
+Send to **My Mobile Phone**
+- type: 'merchant_wallet' `REQUIRED`
+- reference `REQUIRED`
+- amount `REQUIRED`
+
+Send to **My Bank account**
+- type: 'merchant_bank_account' `REQUIRED`
+- reference `REQUIRED`
+- amount `REQUIRED`
+
+A Successful Response is returned with the URL of the Payment resource in the HTTP Location Header.
+
+#### Query SendMoney Request Status
+
+To Query the status of the Outgoing Payment request:
+
+    send_money.query_resource(send_money.payments_location_url)
+
+To Query the most recent status of Outgoing Payment request:
+ 
+    send_money.query_status
+
+A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
+ 
+Code example;
+
+```ruby
+params = {
+  destinations: [
+    {
+      type: "bank_account",
+      bank_branch_ref: Faker::Internet.uuid,
+      account_name: Faker::Name.name,
+      account_number: Faker::Number.number(digits: 6),
+      nickname: Faker::Name.name,
+      amount: Faker::Number.number(digits: 4),
+      description: "pay via K2 Connect",
+    },
+  ],
+  currency: "KES",
+  source_identifier: nil,
+  callback_url: Faker::Internet.url,
+}
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+send_money.create_payment(params)
+```
 
 ### Polling
 
@@ -394,7 +420,7 @@ First Create the K2Polling Object
 The following details should be passed:
 
 - scope `REQUIRED`
-- scope_reference
+- scope_reference is `REQUIRED` if scope is till
 - from_time `REQUIRED`
 - to_time `REQUIRED`
 - callback_url `REQUIRED`
@@ -418,13 +444,13 @@ k2_polling.location_url # => "https://sandbox.kopokopo.com/api/v1/polling/247b1b
 
 #### Query Request
 
-To Query the status of the prior initiated Notification Request pass the location_url response as shown:
+To Query the status of the prior initiated Polling Request pass the location_url response as shown:
 
-     k2_notification.query_resource_url(k2_notification.location_url)  
+     k2_polling.query_resource_url(k2_polling.location_url)  
 
-To Query the most recent initiated Transfer Request:
+To Query the most recent initiated Polling Request:
 
-     k2_notification.query_resource  
+     k2_polling.query_resource  
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
@@ -539,7 +565,7 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_self`
     - `links_resource`
     
-5. B2b Transaction Transaction (External Till to Till):
+5. B2b Transaction Received (External Till to Till):
     - `id`
     - `resource_id`
     - `topic`
@@ -554,8 +580,57 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_self`
     - `links_resource`
     - `sending_till`
+
+6. Card Transaction Received
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `customer_cc_number`
+    - `status`
+    - `links_self`
+    - `links_resource`
+    - `settled`
+
+7. Card Transaction Reversed:
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `customer_cc_number`
+    - `status`
+    - `links_self`
+    - `links_resource`
+
+8. Card Transaction Voided (External Till to Till):
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event_type`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `customer_cc_number`
+    - `status`
+    - `links_self`
+    - `links_resource`
     
-6. Process STK Push Payment Request Result
+9. Process STK Push Payment Request Result
     - `id`
     - `type`
     - `initiation_time`
@@ -578,7 +653,7 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_self`
     - `callback_url`
 
-7. Process PAY Result
+10. Process Send money Result
     - `id`
     - `type`
     - `created_at`
@@ -589,17 +664,6 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `metadata`
     - `links_self`
     - `callback_url`
-
-8. Process Settlement Transfer Result
-   - `id`
-   - `type`
-   - `created_at`
-   - `status`
-   - `transfer_batch`
-   - `currency`
-   - `value`
-   - `links_self`
-   - `callback_url`
     
 If you want to convert the Object into a Hash or Array, the following methods can be used.
 - Hash:
