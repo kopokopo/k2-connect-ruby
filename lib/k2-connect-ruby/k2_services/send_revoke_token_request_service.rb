@@ -21,7 +21,8 @@ module K2ConnectRuby
       private
 
       def send_request
-        response = RestClient.post(endpoint, params)
+        resource = RestClient::Resource.new(endpoint, open_timeout: 5, read_timeout: 10, headers: request_headers)
+        response = resource.post(params.to_json)
         CallResult.success(
           {
             response_code: response.code,
@@ -47,6 +48,10 @@ module K2ConnectRuby
           client_secret: client_secret,
           access_token: access_token,
         }
+      end
+
+      def request_headers
+        { "Content-Type" => "application/json", "Accept" => "application/json", "User-Agent" => "Kopokopo-Ruby-SDK" }
       end
     end
   end
