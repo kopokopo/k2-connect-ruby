@@ -42,7 +42,7 @@ module K2ConnectRuby
       end
 
       def request_headers
-        { "Content-Type" => "application/json", "Accept" => "application/json" }
+        { "Content-Type" => "application/json", "Accept" => "application/json", "User-Agent" => "Kopokopo-Ruby-SDK" }
       end
 
       def request_body_json
