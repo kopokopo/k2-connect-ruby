@@ -14,21 +14,21 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Subscribe) do
   end
 
   describe "#webhook_subscribe" do
-    let(:empty_event){ webhook_structure("", "till", 112233) }
-    let(:wrong_event){ webhook_structure("event_type", "till", 112233) }
+    let(:empty_event) { webhook_structure("", "till", 112233) }
+    let(:wrong_event) { webhook_structure("event_type", "till", 112233) }
 
     # Correct webhooks
-    let(:b2b){ webhook_structure("b2b_transaction_received", "till", 112233) }
-    let(:bg){ webhook_structure("buygoods_transaction_received", "till", 112233) }
-    let(:customer_created){ webhook_structure("customer_created", "company") }
-    let(:settlement){ webhook_structure("settlement_transfer_completed", "company") }
-    let(:bg_reversed){ webhook_structure("buygoods_transaction_reversed", "till", 112233) }
+    let(:b2b) { webhook_structure("b2b_transaction_received", "till", 112233) }
+    let(:bg) { webhook_structure("buygoods_transaction_received", "till", 112233) }
+    let(:customer_created) { webhook_structure("customer_created", "company") }
+    let(:settlement) { webhook_structure("settlement_transfer_completed", "company") }
+    let(:bg_reversed) { webhook_structure("buygoods_transaction_reversed", "till", 112233) }
     # Incorrect Webhooks
-    let(:incorrect_b2b){ webhook_structure("b2b_transaction_received", "company", 112233) }
-    let(:incorrect_b2b){ webhook_structure("buygoods_transaction_received", "company", 112233) }
-    let(:incorrect_customer_created){ webhook_structure("customer_created", "till", 112233) }
-    let(:incorrect_settlement){ webhook_structure("settlement_transfer_completed", "till", 112233) }
-    let(:incorrect_bg_reversed){ webhook_structure("buygoods_transaction_reversed", "company", 112233) }
+    let(:incorrect_b2b) { webhook_structure("b2b_transaction_received", "company", 112233) }
+    let(:incorrect_b2b) { webhook_structure("buygoods_transaction_received", "company", 112233) }
+    let(:incorrect_customer_created) { webhook_structure("customer_created", "till", 112233) }
+    let(:incorrect_settlement) { webhook_structure("settlement_transfer_completed", "till", 112233) }
+    let(:incorrect_bg_reversed) { webhook_structure("buygoods_transaction_reversed", "company", 112233) }
 
     context "with invalid details" do
       context "event type does not exist" do
@@ -256,12 +256,12 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Subscribe) do
   end
 
   def stub_access_token_request
-    stub_request(:post, "https://sandbox.kopokopo.com/oauth/token")
+    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("oauth_token"))
       .to_return(body: { access_token: "access_token" }.to_json, status: 200)
   end
 
   def stub_webhook_subscribe
-    stub_request(:post, "https://sandbox.kopokopo.com/api/v1/webhook_subscriptions")
+    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("webhook_subscriptions"))
       .to_return(status: 201, body: { data: "some_data" }.to_json, headers: { location: Faker::Internet.url })
   end
 end

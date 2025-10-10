@@ -5,15 +5,12 @@ endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   revoke_token: oauth/revoke
   introspect_token: oauth/introspect
   token_info: oauth/token/info
-  webhook_subscriptions: api/v1/webhook_subscriptions
-  pay_recipient: api/v1/pay_recipients
-  payments: api/v1/payments
+  webhook_subscriptions: api/v2/webhook_subscriptions
+  pay_recipient: api/v2/pay_recipients
   send_money: api/v2/send_money
-  incoming_payments: api/v1/incoming_payments
-  settlement_mobile_wallet: api/v1/merchant_wallets
-  settlement_bank_account: api/v1/merchant_bank_accounts
-  transfers: api/v1/settlement_transfers
-  poll: api/v1/polling
-  transaction_sms_notifications: api/v1/transaction_sms_notifications
+  incoming_payments: api/v2/incoming_payments
+  settlement_mobile_wallet: api/v2/merchant_wallets
+  settlement_bank_account: api/v2/merchant_bank_accounts
+  poll: api/v2/polling
 network_operators:
 - SAFARICOM

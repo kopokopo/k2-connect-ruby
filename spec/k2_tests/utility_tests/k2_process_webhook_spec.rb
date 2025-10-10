@@ -176,7 +176,7 @@ RSpec.describe(K2ConnectRuby::K2Utilities::K2ProcessWebhook) do
       end
 
       it 'processes successfully' do
-        expect(k2_process_webhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::SettlementWebhook)
+        expect(k2_process_webhook.process(@settlement_bank_account, 'k2_secret_key', '794fc3795e29776d037ed159f496db21ef35c034d9515e38b59ffd2a2d6445a6')).instance_of?(K2ConnectRuby::K2Services::Payloads::Webhooks::TransferWebhook)
       end
     end
 

@@ -24,12 +24,16 @@ module K2ConnectRuby
         CallResult.success(
           {
             response_code: response.code,
-            response_headers: JSON.parse(response.headers.to_json, symbolize_names: true),
-            response_body: JSON.parse(response.body, symbolize_names: true),
+            response_headers: response_headers(response.headers),
+            response_body: response_body(response.body),
           },
         )
+      rescue RestClient::RequestTimeout => ex
+        CallResult.errors(["Request timed out."])
+      rescue RestClient::Unauthorized => ex
+        CallResult.errors(["Unauthorized access. Access token is invalid."])
       rescue RestClient::Exception => ex
-        CallResult.errors(rest_client_errors(ex))
+        CallResult.errors([rest_client_error(ex)&.dig("error_description")])
       rescue Errno::ECONNREFUSED => ex
         CallResult.errors(["Connection refused"])
       rescue StandardError => ex

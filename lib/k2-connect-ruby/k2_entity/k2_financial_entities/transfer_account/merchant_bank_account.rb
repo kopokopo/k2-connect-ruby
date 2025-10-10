@@ -3,8 +3,8 @@
 module K2ConnectRuby
   module K2Entity
     module K2FinancialEntities
-      module SettlementAccount
-        class MerchantBankAccount < SettlementAccountRequest
+      module TransferAccount
+        class MerchantBankAccount < TransferAccountRequest
           include ActiveModel::Validations
 
           attr_accessor :account_name, :account_number, :bank_branch_ref, :settlement_method

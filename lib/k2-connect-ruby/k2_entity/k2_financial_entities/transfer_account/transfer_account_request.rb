@@ -3,8 +3,8 @@
 module K2ConnectRuby
   module K2Entity
     module K2FinancialEntities
-      module SettlementAccount
-        class SettlementAccountRequest
+      module TransferAccount
+        class TransferAccountRequest
           include ActiveModel::Validations
 
           attr_accessor :type, :nickname

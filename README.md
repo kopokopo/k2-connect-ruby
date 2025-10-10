@@ -58,14 +58,11 @@ Add the require line to use the gem:
 To set the base_url:
 
 ```ruby
-K2ConnectRuby::K2Utilities::Config::K2Config.base_url("https://sandbox.kopokopo.com/")
+K2ConnectRuby::K2Utilities::Config::K2Config.base_url = "https://sandbox.kopokopo.com/"
 ```
 
-To set the api version:
-
-```ruby
-K2ConnectRuby::K2Utilities::Config::K2Config.version(2)
-```
+> [!NOTE]
+> The API version in use is K2 Connect v2. To use K2 Connect v2, make use of versions 3.0.0 of the SDK. 
 
 > [!WARNING]
 > The following APIs are deprecated on version 2 (v2).
@@ -104,13 +101,15 @@ Supported event types:
 - card_transaction_received
 - card_transaction_voided
 - card_transaction_reversed
+- customer_created
+- settlement_transfer_completed
  
 Code example;
 
 ```ruby
 require 'k2-connect-ruby'
-k2_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
-k2subscriber = K2ConnectRuby::K2Entity::K2Subscribe.new(k2_token)
+access_token = K2ConnectRuby::K2Entity::K2Token.new('your_client_id', 'your_client_secret').request_token
+k2subscriber = K2ConnectRuby::K2Entity::K2Subscribe.new(access_token)
 your_request = {
   event_type: 'buygoods_transaction_received',
   url: callback_url,
@@ -127,7 +126,7 @@ k2subscriber.webhook_subscribe(your_request)
  
  To receive payments from M-PESA users via STK Push we first create a K2Stk Object, passing the access_token that was created prior.
  
-    k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(your_access_token)
+    k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(access_token)
   
  Afterwards we send a POST request for receiving Payments by calling the following method and passing the params value received from the POST Form Request: 
 
@@ -161,18 +160,24 @@ As a result a JSON payload will be returned, accessible with the k2_response_bod
 Code example;
     
 ```ruby
-k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(your_access_token)
+k2_stk = K2ConnectRuby::K2Entity::K2Stk.new(access_token)
 
 your_request = {
-        payment_channel: 'M-PESA',
-        till_number: 'K112233',
-        first_name: stk_params[:first_name],
-        last_name: stk_params[:last_name],
-        phone_number: stk_params[:phone],
-        email: stk_params[:email],
-        currency: stk_params[:currency],
-        value: stk_params[:value],
-        callback_url: callback_url
+  payment_channel: "M-PESA STK Push",
+  till_number: "K112233",
+  first_name: "First",
+  middle_name: "Middle",
+  last_name: "Last",
+  phone_number: "phone_number",
+  email: "test_email@email.com",
+  currency: "KES",
+  amount: "100",
+  metadata: {
+    customer_id: "123_456_789",
+    reference: "123_456",
+    notes: "Placeholder text",
+  },
+  callback_url: callback_url,
 }
 k2_stk.send_stk_request(your_request)
 k2_stk.query_resource(k2_stk.location_url)
@@ -213,6 +218,13 @@ Add a external recipient, with the following arguments:
 
 ```ruby
 external_recipient = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
+your_input = {
+  type: "mobile_wallet",
+  first_name: "First",
+  last_name: "Last",
+  email: "test_email@email.com",
+  phone_number: "phone_number",
+}
 external_recipient.add_external_recipient(your_input)
 ```
 
@@ -263,7 +275,7 @@ with the following details:
 - nickname
 
 ```ruby
-transfer_account = K2ConnectRuby::K2Entity::TransferAccount.new(your_access_token)
+transfer_account = K2ConnectRuby::K2Entity::TransferAccount.new(access_token)
 # Add a mobile merchant wallet
 merchant_wallet_params = {
   type: "merchant_wallet",
@@ -279,7 +291,7 @@ merchant_bank_account_params = {
   type: "merchant_bank_account",
   account_name: Faker::Name.name_with_middle,
   account_number: Faker::Number.number(digits: 10),
-  bank_branch_ref: Faker::Internet.uuid,
+  bank_branch_ref: "reference to bank branch", # View https://developers.kopokopo.com/ on how to retrieve the bank branch reference
   settlement_method: "EFT",
   nickname: Faker::Name.name_with_middle,
 }
@@ -303,7 +315,7 @@ A HTTP Response will be returned in a JSON Payload, accessible with the k2_respo
 Code example;
 
 ```ruby
-transfer_account = K2ConnectRuby::K2Entity::TransferAccount.new(your_access_token)
+transfer_account = K2ConnectRuby::K2Entity::TransferAccount.new(access_token)
 transfer_account.add_transfer_account(your_input)
 transfer_account.query_resource(transfer_account.transfer_account_location_url)
 ```
@@ -385,24 +397,46 @@ To Query the most recent status of Outgoing Payment request:
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
  
-Code example;
+Code example of send money to an external recipient;
 
 ```ruby
+# Send money to external recipient
 params = {
   destinations: [
     {
       type: "bank_account",
-      bank_branch_ref: Faker::Internet.uuid,
+      bank_branch_ref: "reference to bank branch", # View https://developers.kopokopo.com/ on how to retrieve the bank branch reference
       account_name: Faker::Name.name,
-      account_number: Faker::Number.number(digits: 6),
+      account_number: "bank account number",
       nickname: Faker::Name.name,
-      amount: Faker::Number.number(digits: 4),
-      description: "pay via K2 Connect",
+      amount: "1000",
+      description: "send money via K2 Connect",
     },
   ],
   currency: "KES",
   source_identifier: nil,
   callback_url: Faker::Internet.url,
+}
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+send_money.create_payment(params)
+```
+
+Code example of send money to a transfer account;
+
+```ruby
+# Send money to a transfer account
+params = {
+  destinations: [
+    {
+      type: "merchant_wallet",
+      destination_reference: destination_reference, # Retrieved from logging into the merchant app https://app.kopokopo.com
+      amount: "1000",
+    },
+  ],
+  currency: "KES",
+  source_identifier: nil,
+  callback_url: callback_url,
 }
 access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
 send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
@@ -428,16 +462,15 @@ The following details should be passed:
 Sample code example:
 
 ```ruby
-your_input =
-        {
-                scope: "company",
-                scope_reference: "",
-                from_time: "2021-04-12T08:50:22+03:00",
-                to_time: "2021-04-19T08:50:22+03:00",
-                callback_url: 'https://call_back_to_your_app.your_application.com'
-        }
+your_input = {
+  scope: "company",
+  scope_reference: "",
+  from_time: "2025-04-12T08:50:22+03:00",
+  to_time: "2025-04-19T08:50:22+03:00",
+  callback_url: 'http://placeholder_url_com'
+}
 
-k2_polling = K2ConnectRuby::K2Entity::K2Polling.new("your_access_token")
+k2_polling = K2ConnectRuby::K2Entity::K2Polling.new("access_token")
 k2_polling.poll(your_input)
 k2_polling.location_url # => "https://sandbox.kopokopo.com/api/v1/polling/247b1bd8-f5a0-4b71-a898-f62f67b8ae1c"
 ```

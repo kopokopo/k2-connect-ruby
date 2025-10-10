@@ -10,8 +10,8 @@ module K2ConnectRuby
 
         class << self
           # Set the Host Url
-          def set_base_url(base_url)
-            raise(ArgumentError, "Invalid URL Format.") unless base_url =~ /\A#{URI.regexp(%w[http https])}\z/
+          def base_url=(base_url)
+            raise(ArgumentError, "Invalid URL Format.") unless base_url =~ /\A#{URI.regexp(["http", "https"])}\z/
 
             @config[:base_url] = base_url
             File.open(File.join(File.dirname(__FILE__), "k2_config.yml"), "w") { |f| YAML.dump(@config, f) }
