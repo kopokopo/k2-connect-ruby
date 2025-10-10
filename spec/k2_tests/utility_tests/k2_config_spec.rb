@@ -2,14 +2,14 @@ RSpec.describe K2ConnectRuby::K2Utilities::Config::K2Config do
   include K2ConnectRuby::K2Utilities::Config::K2Config
   let(:k2_config) { K2ConnectRuby::K2Utilities::Config::K2Config }
 
-  describe "#set_base_url" do
+  describe "#base_url=" do
     it "should raise error if not a url" do
-      expect { k2_config.set_base_url("url") }.to(raise_error(ArgumentError, "Invalid URL Format."))
+      expect { k2_config.base_url = "url" }.to(raise_error(ArgumentError, "Invalid URL Format."))
     end
 
     it "should set the url" do
       base_url = "https://sandbox.kopokopo.com/"
-      k2_config.set_base_url(base_url)
+      k2_config.base_url = base_url
       expect(k2_config.base_url).to(eql(base_url))
     end
   end

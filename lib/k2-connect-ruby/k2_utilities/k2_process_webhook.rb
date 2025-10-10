@@ -25,7 +25,7 @@ module K2ConnectRuby
           K2ConnectRuby::K2Services::Payloads::Webhooks::B2bTransactionReceived.new(payload)
           # Settlement Transfer
         when "settlement_transfer_completed"
-          K2ConnectRuby::K2Services::Payloads::Webhooks::SettlementWebhook.new(payload)
+          K2ConnectRuby::K2Services::Payloads::Webhooks::TransferWebhook.new(payload)
           # Customer Created
         when "customer_created"
           K2ConnectRuby::K2Services::Payloads::Webhooks::CustomerCreated.new(payload)

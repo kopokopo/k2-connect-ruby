@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Services
     module Payloads
       module Transactions
         class OutgoingPayment < OutgoingTransaction
           attr_reader :transaction_reference,
-                      :destination
+            :destination
 
           def initialize(payload)
             super

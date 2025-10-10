@@ -15,7 +15,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: 112233,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
 
         aggregate_failures do
@@ -34,7 +34,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: 112233,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
         k2_polling.poll(till_polling_payload)
         expect(k2_polling.location_url).not_to(eq(nil))
@@ -52,7 +52,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: 112233,
               from_time: nil,
               to_time: Time.now,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -73,7 +73,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: 112233,
               from_time: Time.now - 14400,
               to_time: nil,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -94,7 +94,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: 112233,
               from_time: Time.now - 14400,
               to_time: Time.now,
-              callback_url: nil
+              callback_url: nil,
             )
 
             aggregate_failures do
@@ -115,7 +115,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: 112233,
               from_time: Time.now - 14400,
               to_time: Time.now,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -136,7 +136,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: 112233,
               from_time: Time.now - 14400,
               to_time: Time.now,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -157,7 +157,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: nil,
               from_time: Time.now - 14400,
               to_time: Time.now,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -180,7 +180,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: 112233,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
         k2_polling.poll(till_polling_payload)
         stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
@@ -203,7 +203,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: 112233,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
         k2_polling.poll(till_polling_payload)
         stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
@@ -228,7 +228,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: nil,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
 
         aggregate_failures do
@@ -247,7 +247,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: nil,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
         k2_polling.poll(company_polling_payload)
         expect(k2_polling.location_url).not_to(eq(nil))
@@ -265,7 +265,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: nil,
               from_time: nil,
               to_time: Time.now,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -286,7 +286,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: nil,
               from_time: Time.now - 14400,
               to_time: nil,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -307,7 +307,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: nil,
               from_time: Time.now - 14400,
               to_time: Time.now,
-              callback_url: nil
+              callback_url: nil,
             )
 
             aggregate_failures do
@@ -328,7 +328,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               scope_reference: nil,
               from_time: Time.now - 14400,
               to_time: Time.now,
-              callback_url: Faker::Internet.url
+              callback_url: Faker::Internet.url,
             )
 
             aggregate_failures do
@@ -351,7 +351,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: nil,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
         k2_polling.poll(company_polling_payload)
         stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
@@ -374,7 +374,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           scope_reference: nil,
           from_time: Time.now - 14400,
           to_time: Time.now,
-          callback_url: Faker::Internet.url
+          callback_url: Faker::Internet.url,
         )
         k2_polling.poll(company_polling_payload)
         stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
@@ -388,12 +388,12 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
   end
 
   def stub_access_token_request
-    stub_request(:post, "https://sandbox.kopokopo.com/oauth/token")
+    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("oauth_token"))
       .to_return(body: { access_token: "access_token" }.to_json, status: 200)
   end
 
   def stub_polling_request
-    stub_request(:post, "https://sandbox.kopokopo.com/api/v1/polling")
+    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("poll"))
       .to_return(status: 201, body: { data: "some_data" }.to_json, headers: { location: Faker::Internet.url })
   end
 end

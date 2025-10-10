@@ -1,22 +1,24 @@
 require "k2-connect-ruby/k2_entity/k2_entity"
 require "k2-connect-ruby/k2_entity/k2_token"
+
 require "k2-connect-ruby/k2_entity/k2_polling"
 require "k2-connect-ruby/k2_entity/polling/polling_request"
+
 require "k2-connect-ruby/k2_entity/k2_subscribe"
 require "k2-connect-ruby/k2_entity/webhook/webhook_subscription_request"
-require "k2-connect-ruby/k2_entity/k2_notification"
-require "k2-connect-ruby/k2_entity/notification/notification_request"
+
 require "k2-connect-ruby/k2_entity/k2_financial_entities/k2_stk"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/stk_push/stk_push_request"
-require "k2-connect-ruby/k2_entity/k2_financial_entities/send_money"
+
 require "k2-connect-ruby/k2_entity/k2_financial_entities/external_recipient"
-require "k2-connect-ruby/k2_entity/k2_financial_entities/settlement_account"
-require "k2-connect-ruby/k2_entity/k2_financial_entities/send_money/send_money_request"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/external_recipient/recipient_request"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/external_recipient/till"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/external_recipient/paybill"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/external_recipient/bank_account"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/external_recipient/mobile_wallet"
+
+require "k2-connect-ruby/k2_entity/k2_financial_entities/send_money"
+require "k2-connect-ruby/k2_entity/k2_financial_entities/send_money/send_money_request"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/destination_request"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/external_till"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/external_paybill"
@@ -24,9 +26,11 @@ require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/external_ba
 require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/external_mpesa_wallet"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/merchant_bank_account"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/destination/merchant_mpesa_wallet"
-require "k2-connect-ruby/k2_entity/k2_financial_entities/settlement_account/settlement_account_request"
-require "k2-connect-ruby/k2_entity/k2_financial_entities/settlement_account/merchant_bank_account"
-require "k2-connect-ruby/k2_entity/k2_financial_entities/settlement_account/merchant_mpesa_wallet"
+
+require "k2-connect-ruby/k2_entity/k2_financial_entities/transfer_account"
+require "k2-connect-ruby/k2_entity/k2_financial_entities/transfer_account/transfer_account_request"
+require "k2-connect-ruby/k2_entity/k2_financial_entities/transfer_account/merchant_bank_account"
+require "k2-connect-ruby/k2_entity/k2_financial_entities/transfer_account/merchant_mpesa_wallet"
 
 module K2ConnectRuby
   module Entity; end

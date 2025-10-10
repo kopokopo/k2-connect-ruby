@@ -3,8 +3,8 @@
 module K2ConnectRuby
   module K2Entity
     module K2FinancialEntities
-      module SettlementAccount
-        class MerchantMpesaWallet < SettlementAccountRequest
+      module TransferAccount
+        class MerchantMpesaWallet < TransferAccountRequest
           include ActiveModel::Validations
 
           attr_accessor :first_name, :last_name, :phone_number, :email, :network

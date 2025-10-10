@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Services
     module Payloads
