@@ -38,7 +38,7 @@ module K2ConnectRuby
         K2ConnectRuby::K2Entity::K2FinancialEntities::SendMoney::SendMoneyRequest.new(
           source_identifier: params[:source_identifier],
           destination_requests: build_destination_requests(params[:destinations]),
-          merchant_metadata: params[:merchant_metadata],
+          metadata: params[:metadata],
           callback_url: params[:callback_url],
         )
       end

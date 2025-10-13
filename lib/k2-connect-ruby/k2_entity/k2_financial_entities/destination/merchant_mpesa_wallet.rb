@@ -7,14 +7,14 @@ module K2ConnectRuby
         class MerchantMpesaWallet < DestinationRequest
           include ActiveModel::Validations
 
-          attr_accessor :destination_reference
+          attr_accessor :reference
 
-          validates :destination_reference, presence: true
+          validates :reference, presence: true
 
           def destination_payload
             {
               type: type,
-              reference: destination_reference,
+              reference: reference,
               amount: amount,
             }
           end

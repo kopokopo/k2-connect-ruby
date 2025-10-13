@@ -623,7 +623,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             destinations: [
               {
                 type: "merchant_bank_account",
-                destination_reference: Faker::Internet.url,
+                reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
               },
             ],
@@ -644,7 +644,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             destinations: [
               {
                 type: "merchant_bank_account",
-                destination_reference: Faker::Internet.url,
+                reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
               },
             ],
@@ -668,7 +668,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               destinations: [
                 {
                   type: "merchant_bank_account",
-                  destination_reference: nil,
+                  reference: nil,
                   amount: Faker::Number.number(digits: 4),
                 },
               ],
@@ -679,7 +679,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Destination reference can't be blank"))
+              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Reference can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -693,7 +693,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               destinations: [
                 {
                   type: "merchant_bank_account",
-                  destination_reference: Faker::Internet.url,
+                  reference: Faker::Internet.url,
                   amount: Faker::Number.number(digits: 4),
                 },
               ],
@@ -721,7 +721,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             destinations: [
               {
                 type: "merchant_wallet",
-                destination_reference: Faker::Internet.url,
+                reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
               },
             ],
@@ -742,7 +742,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             destinations: [
               {
                 type: "merchant_wallet",
-                destination_reference: Faker::Internet.url,
+                reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
               },
             ],
@@ -766,7 +766,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               destinations: [
                 {
                   type: "merchant_wallet",
-                  destination_reference: nil,
+                  reference: nil,
                   amount: Faker::Number.number(digits: 4),
                 },
               ],
@@ -777,7 +777,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Destination reference can't be blank"))
+              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Reference can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -791,7 +791,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               destinations: [
                 {
                   type: "merchant_wallet",
-                  destination_reference: Faker::Internet.url,
+                  reference: Faker::Internet.url,
                   amount: Faker::Number.number(digits: 4),
                 },
               ],
