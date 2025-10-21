@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for collecting destination details for my bank account
 
 module K2ConnectRuby
@@ -16,6 +18,7 @@ module K2ConnectRuby
               type: type,
               reference: reference,
               amount: amount,
+              currency: currency,
             }
           end
         end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for collecting destination details for external M-PESA numbers
 
 module K2ConnectRuby
@@ -20,6 +22,7 @@ module K2ConnectRuby
               phone_number: phone_number,
               network: network,
               amount: amount,
+              currency: currency,
               description: description,
               favourite: favourite,
             }
