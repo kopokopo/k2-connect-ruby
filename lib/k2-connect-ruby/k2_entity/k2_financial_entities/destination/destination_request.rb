@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Entity
     module K2FinancialEntities
@@ -5,9 +7,10 @@ module K2ConnectRuby
         class DestinationRequest
           include ActiveModel::Validations
 
-          attr_accessor :type, :nickname, :amount, :description, :favourite
+          attr_accessor :type, :nickname, :amount, :currency, :description, :favourite
 
-          validates :type, :amount, presence: true
+          validates :type, :amount, :currency, presence: true
+          validates :currency, inclusion: { in: ["KES"], message: "must be 'KES'." }
 
           def initialize(kwargs)
             kwargs.each do |key, value|

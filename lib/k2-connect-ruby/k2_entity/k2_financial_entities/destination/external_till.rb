@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for collecting destination details for external till
 
 module K2ConnectRuby
@@ -17,6 +19,7 @@ module K2ConnectRuby
               nickname: nickname,
               till_number: till_number,
               amount: amount,
+              currency: currency,
               description: description,
               favourite: favourite,
             }

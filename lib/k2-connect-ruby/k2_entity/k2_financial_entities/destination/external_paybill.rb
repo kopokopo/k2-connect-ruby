@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class for collecting destination details for external paybills
 
 module K2ConnectRuby
@@ -18,6 +20,7 @@ module K2ConnectRuby
               paybill_number: paybill_number,
               paybill_account_number: paybill_account_number,
               amount: amount,
+              currency: currency,
               description: description,
               favourite: favourite,
             }

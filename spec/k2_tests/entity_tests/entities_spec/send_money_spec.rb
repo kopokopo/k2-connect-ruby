@@ -17,6 +17,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 phone_number: "254700000000",
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -41,6 +42,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 phone_number: "254700000000",
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -68,6 +70,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   phone_number: nil,
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -96,6 +99,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   phone_number: "+255916230902",
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -124,6 +128,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   phone_number: "255716230902",
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -152,6 +157,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   phone_number: "0916230902",
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -180,6 +186,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   phone_number: "0700000000",
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -212,6 +219,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 account_number: Faker::Number.number(digits: 6),
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -237,6 +245,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 account_number: Faker::Number.number(digits: 6),
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -265,6 +274,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   account_number: Faker::Number.number(digits: 6),
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -294,6 +304,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   account_number: nil,
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -323,6 +334,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   account_number: Faker::Number.number(digits: 6),
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -352,6 +364,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   account_number: Faker::Number.number(digits: 6),
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -382,6 +395,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 till_number: Faker::Number.number(digits: 6),
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -405,6 +419,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 till_number: Faker::Number.number(digits: 6),
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -431,6 +446,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   till_number: nil,
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -458,6 +474,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   till_number: Faker::Number.number(digits: 6),
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -489,6 +506,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 paybill_account_number: Faker::Number.number(digits: 10),
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -513,6 +531,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 paybill_account_number: Faker::Number.number(digits: 10),
                 nickname: Faker::Name.name,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
                 description: "pay via K2 Connect",
               },
             ],
@@ -540,6 +559,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   paybill_account_number: Faker::Number.number(digits: 10),
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -568,6 +588,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   paybill_account_number: nil,
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -596,6 +617,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   paybill_account_number: Faker::Number.number(digits: 10),
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                   description: "pay via K2 Connect",
                 },
               ],
@@ -625,6 +647,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 type: "merchant_bank_account",
                 reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
               },
             ],
             currency: "KES",
@@ -646,6 +669,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 type: "merchant_bank_account",
                 reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
               },
             ],
             currency: "KES",
@@ -670,6 +694,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   type: "merchant_bank_account",
                   reference: nil,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                 },
               ],
               currency: "KES",
@@ -695,6 +720,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   type: "merchant_bank_account",
                   reference: Faker::Internet.url,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                 },
               ],
               currency: "KES",
@@ -723,6 +749,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 type: "merchant_wallet",
                 reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
               },
             ],
             currency: "KES",
@@ -744,6 +771,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                 type: "merchant_wallet",
                 reference: Faker::Internet.url,
                 amount: Faker::Number.number(digits: 4),
+                currency: "KES",
               },
             ],
             currency: "KES",
@@ -768,6 +796,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   type: "merchant_wallet",
                   reference: nil,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                 },
               ],
               currency: "KES",
@@ -793,6 +822,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
                   type: "merchant_wallet",
                   reference: Faker::Internet.url,
                   amount: Faker::Number.number(digits: 4),
+                  currency: "KES",
                 },
               ],
               currency: "KES",
@@ -877,6 +907,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               phone_number: "254700000000",
               nickname: Faker::Name.name,
               amount: Faker::Number.number(digits: 4),
+              currency: "KES",
               description: "pay via K2 Connect",
             },
           ],
@@ -888,6 +919,63 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
         k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
         aggregate_failures do
           expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Undefined destination type."))
+          expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
+        end
+      end
+    end
+
+    context "no currency provided" do
+      it "raises an error and does not send a send money request" do
+        stub_access_token_request
+        stub_send_money_request
+        params = {
+          destinations: [
+            {
+              type: "mobile_wallet",
+              network: "Safaricom",
+              phone_number: "0700000000",
+              nickname: Faker::Name.name,
+              amount: Faker::Number.number(digits: 4),
+              description: "pay via K2 Connect",
+            },
+          ],
+          currency: "KES",
+          source_identifier: nil,
+          callback_url: Faker::Internet.url,
+        }
+        access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        aggregate_failures do
+          expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Currency can't be blank"))
+          expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
+        end
+      end
+    end
+
+    context "invalid currency provided" do
+      it "raises an error and does not send a send money request" do
+        stub_access_token_request
+        stub_send_money_request
+        params = {
+          destinations: [
+            {
+              type: "mobile_wallet",
+              network: "Safaricom",
+              phone_number: "0700000000",
+              nickname: Faker::Name.name,
+              amount: Faker::Number.number(digits: 4),
+              currency: "USD",
+              description: "pay via K2 Connect",
+            },
+          ],
+          currency: "KES",
+          source_identifier: nil,
+          callback_url: Faker::Internet.url,
+        }
+        access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        aggregate_failures do
+          expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Currency must be 'KES'."))
           expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
         end
       end
@@ -907,6 +995,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               phone_number: "254700000000",
               nickname: Faker::Name.name,
               amount: Faker::Number.number(digits: 4),
+              currency: "KES",
               description: "pay via K2 Connect",
             },
           ],
@@ -935,6 +1024,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               phone_number: "254700000000",
               nickname: Faker::Name.name,
               amount: Faker::Number.number(digits: 4),
+              currency: "KES",
               description: "pay via K2 Connect",
             },
           ],
@@ -965,6 +1055,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               phone_number: "254700000000",
               nickname: Faker::Name.name,
               amount: Faker::Number.number(digits: 4),
+              currency: "KES",
               description: "pay via K2 Connect",
             },
           ],
@@ -993,6 +1084,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               phone_number: "254700000000",
               nickname: Faker::Name.name,
               amount: Faker::Number.number(digits: 4),
+              currency: "KES",
               description: "pay via K2 Connect",
             },
           ],

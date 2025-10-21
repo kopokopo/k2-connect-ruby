@@ -139,7 +139,7 @@ Ensure the following arguments are passed:
  - last_name 
  - phone_number `REQUIRED`
  - email
- - currency: default is `KES`
+ - currency: `KES` expected
  - value `REQUIRED`
  - callback_url `REQUIRED`
 
@@ -333,7 +333,7 @@ Creating an Outgoing Payment to a third party.
 The following arguments should be passed within a hash:
 
 - destinations (array of hashes) `REQUIRED`
-- currency default is `KES`
+- currency `KES` expected
 - source_identifier
 - callback_url `REQUIRED`
 
@@ -430,7 +430,7 @@ params = {
   destinations: [
     {
       type: "merchant_wallet",
-      destination_reference: destination_reference, # Retrieved from logging into the merchant app https://app.kopokopo.com
+      reference: destination_reference, # Retrieved from logging into the merchant app https://app.kopokopo.com
       amount: "1000",
     },
   ],
