@@ -22,7 +22,6 @@ module K2ConnectRuby
               phone_number: phone_number,
               network: network,
               amount: amount,
-              currency: currency,
               description: description,
               favourite: favourite,
             }

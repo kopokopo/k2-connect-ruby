@@ -21,7 +21,6 @@ module K2ConnectRuby
               account_number: account_number,
               bank_branch_ref: bank_branch_ref,
               amount: amount,
-              currency: currency,
               description: description,
               favourite: favourite,
             }

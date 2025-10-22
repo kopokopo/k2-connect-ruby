@@ -39,6 +39,7 @@ module K2ConnectRuby
           source_identifier: params[:source_identifier],
           destination_requests: build_destination_requests(params[:destinations]),
           metadata: params[:metadata],
+          currency: params[:currency],
           callback_url: params[:callback_url],
         )
       end
