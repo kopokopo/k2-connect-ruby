@@ -7,10 +7,9 @@ module K2ConnectRuby
         class DestinationRequest
           include ActiveModel::Validations
 
-          attr_accessor :type, :nickname, :amount, :currency, :description, :favourite
+          attr_accessor :type, :nickname, :amount, :description, :favourite
 
-          validates :type, :amount, :currency, presence: true
-          validates :currency, inclusion: { in: ["KES"], message: "must be 'KES'." }
+          validates :type, :amount, presence: true
 
           def initialize(kwargs)
             kwargs.each do |key, value|

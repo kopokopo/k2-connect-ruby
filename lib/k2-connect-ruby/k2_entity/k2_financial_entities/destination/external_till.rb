@@ -19,7 +19,6 @@ module K2ConnectRuby
               nickname: nickname,
               till_number: till_number,
               amount: amount,
-              currency: currency,
               description: description,
               favourite: favourite,
             }

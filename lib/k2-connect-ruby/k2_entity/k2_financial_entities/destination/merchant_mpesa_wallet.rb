@@ -18,7 +18,6 @@ module K2ConnectRuby
               type: type,
               reference: reference,
               amount: amount,
-              currency: currency,
             }
           end
         end

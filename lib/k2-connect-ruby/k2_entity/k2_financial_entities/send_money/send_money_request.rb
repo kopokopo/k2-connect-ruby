@@ -7,9 +7,10 @@ module K2ConnectRuby
         class SendMoneyRequest
           include ActiveModel::Validations
 
-          attr_accessor :source_identifier, :destinations, :destination_requests, :callback_url, :metadata
+          attr_accessor :source_identifier, :destinations, :destination_requests, :currency, :callback_url, :metadata
 
-          validates :callback_url, presence: true
+          validates :currency, :callback_url, presence: true
+          validates :currency, inclusion: { in: ["KES"], message: "must be 'KES'." }
           validate :validate_destination_details
 
           def initialize(kwargs)
@@ -26,7 +27,7 @@ module K2ConnectRuby
             {
               source_identifier: source_identifier,
               destinations: destination_requests&.map(&:destination_payload),
-              currency: "KES",
+              currency: currency,
               metadata: metadata,
               _links: {
                 callback_url: callback_url,
