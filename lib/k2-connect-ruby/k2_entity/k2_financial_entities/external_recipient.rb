@@ -38,13 +38,13 @@ module K2ConnectRuby
       def build_recipient(params)
         case params[:type]
         when "mobile_wallet"
-          K2ConnectRuby::K2Entity::K2FinancialEntities::PayRecipient::MobileWallet.new(params)
+          K2ConnectRuby::K2Entity::K2FinancialEntities::ExternalRecipient::MobileWallet.new(params)
         when "bank_account"
-          K2ConnectRuby::K2Entity::K2FinancialEntities::PayRecipient::BankAccount.new(params)
+          K2ConnectRuby::K2Entity::K2FinancialEntities::ExternalRecipient::BankAccount.new(params)
         when "till"
-          K2ConnectRuby::K2Entity::K2FinancialEntities::PayRecipient::Till.new(params)
+          K2ConnectRuby::K2Entity::K2FinancialEntities::ExternalRecipient::Till.new(params)
         when "paybill"
-          K2ConnectRuby::K2Entity::K2FinancialEntities::PayRecipient::Paybill.new(params)
+          K2ConnectRuby::K2Entity::K2FinancialEntities::ExternalRecipient::Paybill.new(params)
         else
           raise(ArgumentError, "Undefined payment method.")
         end
