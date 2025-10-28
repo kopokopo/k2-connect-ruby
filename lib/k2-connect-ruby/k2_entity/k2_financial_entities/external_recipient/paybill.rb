@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Entity
     module K2FinancialEntities
-      module PayRecipient
+      module ExternalRecipient
         class Paybill < RecipientRequest
           include ActiveModel::Validations
 
