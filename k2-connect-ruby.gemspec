@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description           = 'Ruby SDK for the Kopo Kopo K2 Connect API, with webhook subscriptions, STK Push, Pay and Settlement Transfer capabilities. Allows decomposition and break down of results and webhooks returned from the K2 Connect APIx``.'
   spec.homepage              = 'https://github.com/kopokopo/k2-connect-ruby.git'
   spec.license               = 'MIT'
-  spec.required_ruby_version = '>= 3.3.5'
+  spec.required_ruby_version = ['>= 3.3.5', '<= 3.4.7']
 
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
