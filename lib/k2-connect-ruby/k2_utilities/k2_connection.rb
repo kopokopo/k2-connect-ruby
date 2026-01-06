@@ -39,6 +39,7 @@ module K2ConnectRuby
         else
           # Returns the access token for authorization
           return response_body[:access_token] if path_url.include?('oauth/token')
+          return response_body if path_url.include?('oauth/introspect')
 
           response_headers[:location]
         end

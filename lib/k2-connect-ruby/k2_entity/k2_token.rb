@@ -40,7 +40,7 @@ module K2ConnectRuby
       end
 
       def token_info(access_token)
-        token_hash = K2ConnectRuby::K2Entity::K2Token.make_hash(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('token_info'), 'get', 'Access Token', nil, false)
+        token_hash = K2ConnectRuby::K2Entity::K2Token.make_hash(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('token_info'), 'get', 'Access Token', nil, true)
 
         token_hash[:access_token] = access_token
         @token_response = K2ConnectRuby::K2Utilities::K2Connection.make_request(token_hash)

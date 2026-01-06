@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description           = 'Ruby SDK for the Kopo Kopo K2 Connect API, with webhook subscriptions, STK Push, Pay and Settlement Transfer capabilities. Allows decomposition and break down of results and webhooks returned from the K2 Connect APIx``.'
   spec.homepage              = 'https://github.com/kopokopo/k2-connect-ruby.git'
   spec.license               = 'MIT'
-  spec.required_ruby_version = '~> 3.3.5'
+  spec.required_ruby_version = '>= 3.3.5'
 
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -38,8 +38,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
 
-  spec.add_dependency 'activesupport', '~> 7.2.2'
-  spec.add_dependency 'activemodel', '~> 7.2.2'
+  spec.add_dependency 'activesupport', ['>= 7.2.2', '< 8.1.1']
+  spec.add_dependency 'activemodel', ['>= 7.2.2', '< 8.1.1']
   spec.add_dependency 'rest-client', '~> 2.1.0'
   spec.add_dependency 'json', '~> 2.8.2'
   spec.add_development_dependency 'bundler', '~> 2.5.16'
