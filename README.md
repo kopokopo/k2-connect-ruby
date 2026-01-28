@@ -8,6 +8,7 @@ Primarily, the library provides functionality to do the following:
 
  - Receive Webhook notifications.
  - Receive payments from your users/customers.
+ - Initiate reversals for payments from your users/customers
  - Initiate payments to third parties.
  - Initiate transfers to your preferred accounts.
  
@@ -27,6 +28,7 @@ All calls made without authentication will also fail.
     - [Add Transfer accounts](#add-transfer-accounts)
     - [Send money](#send-money)
     - [Polling](#polling)
+    - [Reversals](#reversals)
     - [Parsing the JSON Payload](#parsing-the-json-payload)
  - [Development](#development)
  - [Author](#author)
@@ -487,6 +489,55 @@ To Query the most recent initiated Polling Request:
 
 A HTTP Response will be returned in a JSON Payload, accessible with the k2_response_body variable.
 
+### Reversals
+
+Initiate a reversal for a C2B or B2B transaction to your till and get the reversal request's status.
+
+#### Initiate a reversal
+Create an instance of `K2ConnectRuby::K2Entity::Reversal` object and call `initiate_reversal` method with the following reversal parameters:
+- `transaction_reference`: Reference of the transaction to be reversed. `REQUIRED`
+- `reason`: Reason for the reversal. `REQUIRED`
+- `metadata`: A hash with a maximum of 5 key-value pairs.
+- `callback_url`: URL that the result will be posted to. `REQUIRED`
+
+```ruby
+reversal_params = {
+  transaction_reference: "Y7T2990R11",
+  reason: "Erroneous payment",
+  metadata: {
+    order_no: "ORD192832",
+  },
+  callback_url: "https://example.com/callback",
+}
+
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+k2_reversal = K2ConnectRuby::K2Entity::Reversal.new(access_token)
+k2_reversal.initiate_reversal(reversal_params)
+```
+
+
+#### Get status of reversal request
+```ruby
+reversal_params = {
+  transaction_reference: "Y7T2990R11",
+  reason: "Erroneous payment",
+  metadata: {
+    order_no: "ORD192832",
+  },
+  callback_url: "https://example.com/callback",
+}
+
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+k2_reversal = K2ConnectRuby::K2Entity::Reversal.new(access_token)
+location_url = k2_reversal.initiate_reversal(reversal_params)
+
+# Get status of current reversal request
+k2_reversal.query_status
+
+# Get status of specific reversal request
+k2_reversal.query_resource(location_url)
+```
+
 ### Parsing the JSON Payload
 
 The K2Client class will be use to parse the Payload received from Kopo Kopo, and to further consume the webhooks and split the responses into components, the K2Authenticator and
@@ -697,7 +748,20 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `metadata`
     - `links_self`
     - `callback_url`
-    
+
+11. Reversal Result
+    - `id`
+    - `type`
+    - `transaction_reference`
+    - `status`
+    - `created_at`
+    - `reason`
+    - `reversal_bulk_payment`
+    - `errors`
+    - `metadata`
+    - `callback_url`
+    - `links_self`
+
 If you want to convert the Object into a Hash or Array, the following methods can be used.
 - Hash:
    

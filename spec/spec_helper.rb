@@ -1,7 +1,9 @@
 require 'bundler/setup'
 require 'webmock/rspec'
 require 'k2-connect-ruby'
-WebMock.allow_net_connect!(allow_localhost: true)
+require "support/auth_helper.rb"
+
+WebMock.allow_net_connect!(allow_localhost: false)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -13,4 +15,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include(AuthHelper)
 end
