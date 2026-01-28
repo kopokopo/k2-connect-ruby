@@ -1079,11 +1079,6 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
     end
   end
 
-  def stub_access_token_request
-    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("oauth_token"))
-      .to_return(body: { access_token: "access_token" }.to_json, status: 200)
-  end
-
   def stub_send_money_request
     stub_request(:post, "https://sandbox.kopokopo.com/api/v2/send_money")
       .to_return(status: 201, body: { data: "some_data" }.to_json, headers: { location: Faker::Internet.url })

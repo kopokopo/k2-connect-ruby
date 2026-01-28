@@ -9,6 +9,7 @@ endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   pay_recipient: api/v2/pay_recipients
   send_money: api/v2/send_money
   incoming_payments: api/v2/incoming_payments
+  reversals: api/v2/reversals
   settlement_mobile_wallet: api/v2/merchant_wallets
   settlement_bank_account: api/v2/merchant_bank_accounts
   poll: api/v2/polling

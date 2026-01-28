@@ -19,6 +19,7 @@ require "k2-connect-ruby/k2_services/payloads/transactions/transfer"
 require "k2-connect-ruby/k2_services/payloads/transactions/incoming_payment"
 require "k2-connect-ruby/k2_services/payloads/transactions/outgoing_payment"
 require "k2-connect-ruby/k2_services/payloads/transactions/send_money_payment"
+require "k2-connect-ruby/k2_services/payloads/transactions/reversal"
 
 module K2ConnectRuby
   module K2Services; end
