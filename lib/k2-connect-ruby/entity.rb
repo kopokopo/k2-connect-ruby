@@ -35,6 +35,9 @@ require "k2-connect-ruby/k2_entity/k2_financial_entities/transfer_account/mercha
 require "k2-connect-ruby/k2_entity/k2_financial_entities/reversal"
 require "k2-connect-ruby/k2_entity/k2_financial_entities/reversals/reversal_request"
 
+require "k2-connect-ruby/k2_entity/k2_financial_entities/payment_link"
+require "k2-connect-ruby/k2_entity/k2_financial_entities/payment_links/payment_link_request"
+
 module K2ConnectRuby
   module Entity; end
 end
