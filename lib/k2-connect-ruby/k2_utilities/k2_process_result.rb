@@ -22,6 +22,8 @@ module K2ConnectRuby
           K2ConnectRuby::K2Services::Payloads::Transactions::SendMoneyPayment.new(payload)
         when "reversals"
           K2ConnectRuby::K2Services::Payloads::Transactions::Reversal.new(payload)
+        when "payment_link"
+          K2ConnectRuby::K2Services::Payloads::Transactions::PaymentLink.new(payload)
         else
           raise ArgumentError, "No Other Specified Payment Type!"
         end

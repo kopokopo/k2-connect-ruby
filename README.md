@@ -11,6 +11,7 @@ Primarily, the library provides functionality to do the following:
  - Initiate reversals for payments from your users/customers
  - Initiate payments to third parties.
  - Initiate transfers to your preferred accounts.
+ - Create payment links
  
 The library is optimized for **Rails Based Frameworks**.
 Please note, all requests MUST be made over HTTPS.
@@ -29,6 +30,7 @@ All calls made without authentication will also fail.
     - [Send money](#send-money)
     - [Polling](#polling)
     - [Reversals](#reversals)
+    - [Payment links](#payment-links)
     - [Parsing the JSON Payload](#parsing-the-json-payload)
  - [Development](#development)
  - [Author](#author)
@@ -538,6 +540,84 @@ k2_reversal.query_status
 k2_reversal.query_resource(location_url)
 ```
 
+### Payment Links
+
+Generate a payment link that you can share with a customer to collect a payment
+
+#### Create a payment link
+Create an instance of `K2ConnectRuby::K2Entity::PaymentLink` object and call `create_payment_link` method with the following payment link parameters:
+- `till_number`:  Till number for the **M-PESA** or **Online Payments Account** that will receive the payment. `REQUIRED`
+- `currency`: 3-digit ISO format currency code. `REQUIRED`
+- `amount`: The amount the customer will pay. `REQUIRED`
+- `payment_reference`: The merchant internal reference for the payment.
+- `note`: Note for the customer as they make the payment.
+- `metadata`: A hash with a maximum of 5 key pairs.
+- `callback_url`: URL that the payment link result will be posted to once a customer makes a payment. `REQUIRED`
+
+```ruby
+payment_link_params = {
+  till_number: "4321",
+  currency: "KES",
+  amount: 1000,
+  payment_reference: "INV02932922",
+  note: "Payment for monthly internet subscription",
+  metadata: {
+    account_number: "1234567",
+  },
+  callback_url: "https://example.com/callback",
+}
+
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+k2_payment_links = K2ConnectRuby::K2Entity::PaymentLink.new(access_token)
+k2_payment_links.create_payment_link(payment_link_params)
+```
+
+### Cancel payment link
+```ruby
+payment_link_params = {
+  till_number: "4321",
+  currency: "KES",
+  amount: 1000,
+  payment_reference: "INV02932922",
+  note: "Payment for monthly internet subscription",
+  metadata: {
+    account_number: "1234567",
+  },
+  callback_url: "https://example.com/callback",
+}
+
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+k2_payment_links = K2ConnectRuby::K2Entity::PaymentLink.new(access_token)
+location_url = k2_payment_links.create_payment_link(payment_link_params)
+
+# Cancel payment link
+k2_payment_links.cancel_payment_link(location_url)
+```
+
+#### Get status of payment link
+```ruby
+payment_link_params = {
+  till_number: "4321",
+  currency: "KES",
+  amount: 1000,
+  payment_reference: "INV02932922",
+  note: "Payment for monthly internet subscription",
+  metadata: {
+    account_number: "1234567",
+  },
+  callback_url: "https://example.com/callback",
+}
+
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+k2_payment_links = K2ConnectRuby::K2Entity::PaymentLink.new(access_token)
+location_url = k2_payment_links.create_payment_link(payment_link_params)
+
+# Get status of current payment link
+k2_payment_links.query_status
+
+# Get status of specific payment link
+k2_payment_links.query_resource(location_url)
+```
 ### Parsing the JSON Payload
 
 The K2Client class will be use to parse the Payload received from Kopo Kopo, and to further consume the webhooks and split the responses into components, the K2Authenticator and
@@ -757,6 +837,23 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `created_at`
     - `reason`
     - `reversal_bulk_payment`
+    - `errors`
+    - `metadata`
+    - `callback_url`
+    - `links_self`
+
+12. Payment Link Result
+    - `id`
+    - `type`
+    - `status`
+    - `created_at`
+    - `till_name`
+    - `till_number`
+    - `currency`
+    - `amount`
+    - `payment_reference`
+    - `note`
+    - `payment_link`
     - `errors`
     - `metadata`
     - `callback_url`
