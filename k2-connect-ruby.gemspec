@@ -11,13 +11,13 @@ Gem::Specification.new do |spec|
   spec.email                 = ["David.mwangi@kopokopo.com"]
 
   spec.summary               = "Ruby SDK for the Kopo Kopo K2 Connect API."
-  spec.description           = "Ruby SDK for the Kopo Kopo K2 Connect API, with webhook subscriptions, STK Push, Pay and Settlement Transfer capabilities. Allows decomposition and break down of results and webhooks returned from the K2 Connect APIx``."
+  spec.description           = "Ruby SDK for the Kopo Kopo K2 Connect API, with webhook subscriptions, STK Push and Send Money capabilities. Allows decomposition and break down of results and webhooks returned from the K2 Connect API."
   spec.homepage              = "https://github.com/kopokopo/k2-connect-ruby.git"
   spec.license               = "MIT"
-  spec.required_ruby_version = ['>= 3.3.5', '<= 3.4.7']
+  spec.required_ruby_version = [">= 3.3.5", "<= 3.4.7"]
 
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
+  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "https://rubygems.org"
@@ -40,8 +40,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
 
-  spec.add_dependency("activemodel", ['>= 7.2.2', '< 8.1.1'])
-  spec.add_dependency("activesupport", ['>= 7.2.2', '< 8.1.1'])
+  spec.add_dependency("activemodel", [">= 7.2.2", "<= 8.1.1"])
+  spec.add_dependency("activesupport", [">= 7.2.2", "<= 8.1.1"])
   spec.add_dependency("json", "~> 2.8.2")
   spec.add_dependency("rest-client", "~> 2.1.0")
   spec.add_development_dependency("bundler", "~> 4.0.3")

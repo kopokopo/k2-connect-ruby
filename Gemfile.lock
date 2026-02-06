@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     k2-connect-ruby (4.0.0)
-      activemodel (>= 7.2.2, < 8.1.1)
-      activesupport (>= 7.2.2, < 8.1.1)
+      activemodel (>= 7.2.2, <= 8.1.1)
+      activesupport (>= 7.2.2, <= 8.1.1)
       json (~> 2.8.2)
       rest-client (~> 2.1.0)
 
@@ -157,7 +157,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 2.5.16)
+  bundler (~> 4.0.3)
   faker (~> 3.5.1)
   guard (~> 2.19)
   guard-rspec (~> 4.7.3)
@@ -171,4 +171,4 @@ DEPENDENCIES
   webmock (~> 3.24)
 
 BUNDLED WITH
-   2.5.16
+  4.0.3
