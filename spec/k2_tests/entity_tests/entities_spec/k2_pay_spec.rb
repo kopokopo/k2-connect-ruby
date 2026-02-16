@@ -26,7 +26,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
 
   describe '#add_recipients' do
     before(:each) do
-      stub_request(:post, 'https://sandbox.kopokopo.com/api/v1/pay_recipients')
+      stub_request(:post, 'https://sandbox.kopokopo.com/api/v1/external_recipients')
         .to_return(status: 201, body: {data: "some_data"}.to_json, headers: { location: Faker::Internet.url })
     end
 
@@ -34,7 +34,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
       context "Correct recipient details" do
         it 'should send an add mobile wallet pay recipient request' do
           @k2pay.add_recipient(@mobile_pay_request_body)
-          expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+          expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
         end
 
         it 'returns a location_url' do
@@ -47,7 +47,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
         it 'should not send an add mobile wallet pay recipient request' do
           aggregate_failures do
             expect { @k2pay.add_recipient(@incorrect_network) }.to raise_error ArgumentError
-            expect(WebMock).not_to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+            expect(WebMock).not_to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
           end
         end
       end
@@ -58,7 +58,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
         context "EFT settlement_method" do
           it 'should send an add bank account pay recipient request' do
             @k2pay.add_recipient(@bank_pay_request_body_eft)
-            expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+            expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
           end
 
           it 'returns a location_url' do
@@ -70,7 +70,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
         context "RTS settlement_method" do
           it 'should send an add bank account pay recipient request' do
             @k2pay.add_recipient(@bank_pay_request_body_rts)
-            expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+            expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
           end
 
           it 'returns a location_url' do
@@ -85,7 +85,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
           it 'should not send an add bank account pay recipient request' do
             aggregate_failures do
               expect { @k2pay.add_recipient(@wrong_bank_pay_request_body) }.to raise_error ArgumentError
-              expect(WebMock).not_to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+              expect(WebMock).not_to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
             end
           end
         end
@@ -96,7 +96,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
       context "Correct recipient details" do
         it 'should send an add till pay recipient request' do
           @k2pay.add_recipient(@till_pay_request_body)
-          expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+          expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
         end
 
         it 'returns a location_url' do
@@ -110,7 +110,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
       context "Correct recipient details" do
         it 'should send an add paybill pay recipient request' do
           @k2pay.add_recipient(@paybill_pay_request_body)
-          expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient')))
+          expect(WebMock).to have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient')))
         end
 
         it 'returns a location_url' do
@@ -179,7 +179,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
   describe '#query_status' do
     context 'for adding pay recipients' do
       before(:each) do
-        stub_request(:post, 'https://sandbox.kopokopo.com/api/v1/pay_recipients')
+        stub_request(:post, 'https://sandbox.kopokopo.com/api/v1/external_recipients')
           .to_return(status: 201, body: {data: "some_data"}.to_json, headers: { location: Faker::Internet.url })
         @k2pay.add_recipient(@mobile_pay_request_body)
         stub_request(:get, @k2pay.recipients_location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
@@ -223,7 +223,7 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Pay do
   describe '#query_resource' do
     context 'for adding pay recipients' do
       before(:each) do
-        stub_request(:post, 'https://sandbox.kopokopo.com/api/v1/pay_recipients')
+        stub_request(:post, 'https://sandbox.kopokopo.com/api/v1/external_recipients')
           .to_return(status: 201, body: {data: "some_data"}.to_json, headers: { location: Faker::Internet.url })
         @k2pay.add_recipient(@mobile_pay_request_body)
         stub_request(:get, @k2pay.recipients_location_url).to_return(status: 200, body: {data: "some_data"}.to_json)

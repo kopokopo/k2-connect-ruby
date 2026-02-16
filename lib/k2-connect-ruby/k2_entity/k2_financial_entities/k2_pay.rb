@@ -49,7 +49,7 @@ module K2ConnectRuby
           #type: params['pay_type'],
           pay_recipient: k2_request_pay_recipient
         }
-        pay_recipient_hash = make_hash(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('pay_recipient'), 'post', @access_token, 'PAY', recipients_body)
+        pay_recipient_hash = make_hash(K2ConnectRuby::K2Utilities::Config::K2Config.path_url('external_recipient'), 'post', @access_token, 'PAY', recipients_body)
         @recipients_location_url = K2ConnectRuby::K2Utilities::K2Connection.make_request(pay_recipient_hash)
       end
 

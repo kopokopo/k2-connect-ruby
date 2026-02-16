@@ -7,7 +7,7 @@ endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   introspect_token: oauth/introspect
   token_info: oauth/token/info
   webhook_subscriptions: webhook_subscriptions
-  pay_recipient: pay_recipients
+  external_recipient: external_recipients
   payments: payments
   incoming_payments: incoming_payments
   settlement_mobile_wallet: merchant_wallets
