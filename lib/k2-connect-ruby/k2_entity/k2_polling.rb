@@ -23,21 +23,13 @@ module K2ConnectRuby
           polling_request.endpoint,
           polling_request.request_body,
         )
-        if result.success?
-          @location_url = result.data[:response_headers][:location]
-        else
-          raise(result.errors.first)
-        end
+        @location_url = result.data[:response_headers][:location]
       end
 
       # Retrieve your newly created polling request by its resource location
       def query_resource(location_url = @location_url)
         result = K2ConnectRuby::K2Services::SendK2ConnectGetRequestService.call(access_token, location_url)
-        if result.success?
-          @k2_response_body = result.data[:response_body]
-        else
-          raise(result.errors.first)
-        end
+        @k2_response_body = result.data[:response_body]
       end
 
       # Retrieve your newly created polling request by specific resource location

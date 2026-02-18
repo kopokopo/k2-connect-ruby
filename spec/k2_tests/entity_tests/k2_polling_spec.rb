@@ -190,6 +190,65 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           expect(WebMock).to(have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(k2_polling.location_url))))
         end
       end
+
+      context "with api errors" do
+        context "when SendK2ConnectGetRequestService returns UnauthorizedError error" do
+          it "should throw correct error response" do
+            stub_access_token_request
+            stub_polling_request
+            access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+            k2_polling = K2ConnectRuby::K2Entity::K2Polling.new(access_token)
+            till_polling_payload = HashWithIndifferentAccess.new(
+              scope: "till",
+              scope_reference: 112233,
+              from_time: Time.now - 14400,
+              to_time: Time.now,
+              callback_url: Faker::Internet.url,
+              )
+            k2_polling.poll(till_polling_payload)
+            stub_request(:get, k2_polling.location_url).to_return(status: 401, body: {data: "some_data"}.to_json)
+            expect { k2_polling.query_resource }.to(raise_error K2ConnectRuby::K2Errors::UnauthorizedError)
+          end
+        end
+
+        context "when SendK2ConnectGetRequestService returns RequestTimeout error" do
+          it "should throw correct error response" do
+            stub_access_token_request
+            stub_polling_request
+            access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+            k2_polling = K2ConnectRuby::K2Entity::K2Polling.new(access_token)
+            till_polling_payload = HashWithIndifferentAccess.new(
+              scope: "till",
+              scope_reference: 112233,
+              from_time: Time.now - 14400,
+              to_time: Time.now,
+              callback_url: Faker::Internet.url,
+              )
+            k2_polling.poll(till_polling_payload)
+            stub_request(:get, k2_polling.location_url).to_timeout
+            expect { k2_polling.query_resource }.to(raise_error K2ConnectRuby::K2Errors::TimeoutError)
+          end
+        end
+
+        context "when SendK2ConnectGetRequestService returns ConnectionError error" do
+          it "should throw correct error response" do
+            stub_access_token_request
+            stub_polling_request
+            access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+            k2_polling = K2ConnectRuby::K2Entity::K2Polling.new(access_token)
+            till_polling_payload = HashWithIndifferentAccess.new(
+              scope: "till",
+              scope_reference: 112233,
+              from_time: Time.now - 14400,
+              to_time: Time.now,
+              callback_url: Faker::Internet.url,
+              )
+            k2_polling.poll(till_polling_payload)
+            stub_request(:get, k2_polling.location_url).to_raise(Errno::ECONNREFUSED)
+            expect { k2_polling.query_resource }.to(raise_error K2ConnectRuby::K2Errors::ConnectionError)
+          end
+        end
+      end
     end
 
     describe "#query_resource_url" do

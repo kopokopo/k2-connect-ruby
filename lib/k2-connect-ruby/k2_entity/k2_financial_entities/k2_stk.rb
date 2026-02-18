@@ -13,11 +13,7 @@ module K2ConnectRuby
           stk_push_request.endpoint,
           stk_push_request.request_body,
         )
-        if result.success?
-          @location_url = result.data[:response_headers][:location]
-        else
-          raise(result.errors.first)
-        end
+        @location_url = result.data[:response_headers][:location]
       end
 
       # Query/Check STK Payment Request Status
