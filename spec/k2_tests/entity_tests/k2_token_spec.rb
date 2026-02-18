@@ -24,6 +24,100 @@ RSpec.describe K2ConnectRuby::K2Entity::K2Token do
     end
   end
 
+  describe '#api errors' do
+    describe '#introspect_token' do
+      context 'when you pass invalid credentials' do
+        it 'should raise a k2 connect unauthorized error' do
+          stub_request(:post, /sandbox.kopokopo.com/).to_return(status: 401, body: { access_token: "access_token" }.to_json)
+
+          expect do
+            k2token.introspect_token("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::UnauthorizedError
+        end
+      end
+
+      context "when SendIntrospectTokenRequestService returns RequestTimeout error" do
+        it "should throw correct error response" do
+          stub_request(:post, /sandbox.kopokopo.com/).to_timeout
+
+          expect do
+            k2token.introspect_token("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::TimeoutError
+        end
+      end
+
+      context "when SendIntrospectTokenRequestService returns ConnectionError error" do
+        it "should throw correct error response" do
+          stub_request(:post, /sandbox.kopokopo.com/).to_raise(Errno::ECONNREFUSED)
+          expect do
+            k2token.introspect_token("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::ConnectionError
+        end
+      end
+    end
+
+    describe '#revoke_token' do
+      context 'when you pass invalid credentials' do
+        it 'should raise an k2 connect unauthorized error' do
+          stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("revoke_token")).to_return(status: 401, body: { access_token: "access_token" }.to_json)
+
+          expect do
+            k2token.revoke_token("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::UnauthorizedError
+        end
+      end
+
+      context "when SendIntrospectTokenRequestService returns RequestTimeout error" do
+        it "should throw correct error response" do
+          stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("revoke_token")).to_return(status: 401, body: { access_token: "access_token" }.to_json)
+
+          expect do
+            k2token.revoke_token("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::UnauthorizedError
+        end
+      end
+
+      context "when SendIntrospectTokenRequestService returns ConnectionError error" do
+        it "should throw correct error response" do
+          stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("revoke_token")).to_raise(Errno::ECONNREFUSED)
+          expect do
+            k2token.revoke_token("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::ConnectionError
+        end
+      end
+    end
+    describe '#token_info' do
+      context 'when you pass invalid credentials' do
+        it 'should raise a k2 connect unauthorized error' do
+          stub_request(:get, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("token_info")).to_return(status: 401, body: { access_token: "access_token" }.to_json)
+
+          expect do
+            k2token.token_info("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::UnauthorizedError
+        end
+      end
+
+      context "when SendIntrospectTokenRequestService returns RequestTimeout error" do
+        it "should throw correct error response" do
+          stub_request(:get, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("token_info")).to_timeout
+
+          expect do
+            k2token.token_info("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::TimeoutError
+        end
+      end
+
+      context "when SendIntrospectTokenRequestService returns ConnectionError error" do
+        it "should throw correct error response" do
+          stub_request(:get, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("token_info")).to_raise(Errno::ECONNREFUSED)
+          expect do
+            k2token.token_info("access_token")
+          end.to raise_error K2ConnectRuby::K2Errors::ConnectionError
+        end
+      end
+    end
+  end
+
   context "Other access token actions" do
     describe '#revoke_token' do
       it 'should return an access token' do

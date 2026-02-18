@@ -19,8 +19,10 @@ module K2ConnectRuby
       private
 
       def send_request
-        resource = RestClient::Resource.new(endpoint, open_timeout: 5, read_timeout: 10, headers: request_headers)
-        response = resource.get
+        response = K2ConnectRuby::HttpClient.get(
+          endpoint,
+          headers: request_headers
+        )
         CallResult.success(
           {
             response_code: response.code,
@@ -28,16 +30,6 @@ module K2ConnectRuby
             response_body: response_body(response.body),
           },
         )
-      rescue RestClient::RequestTimeout => ex
-        CallResult.errors(["Request timed out."])
-      rescue RestClient::Unauthorized => ex
-        CallResult.errors(["Unauthorized access. Access token is invalid."])
-      rescue RestClient::Exception => ex
-        CallResult.errors([rest_client_error(ex)&.dig("error_description")])
-      rescue Errno::ECONNREFUSED => ex
-        CallResult.errors(["Connection refused"])
-      rescue StandardError => ex
-        CallResult.errors([ex.message])
       end
 
       def endpoint

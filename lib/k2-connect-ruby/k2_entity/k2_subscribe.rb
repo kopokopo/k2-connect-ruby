@@ -24,21 +24,13 @@ module K2ConnectRuby
           webhook_subscription_request.endpoint,
           webhook_subscription_request.request_body,
         )
-        if result.success?
-          @location_url = result.data[:response_headers][:location]
-        else
-          raise(result.errors.first)
-        end
+        @location_url = result.data[:response_headers][:location]
       end
 
       # Query Recent Webhook
       def query_webhook(location_url = @location_url)
         result = K2ConnectRuby::K2Services::SendK2ConnectGetRequestService.call(access_token, location_url)
-        if result.success?
-          @k2_response_body = result.data[:response_body]
-        else
-          raise(result.errors.first)
-        end
+        @k2_response_body = result.data[:response_body]
       end
 
       # Query Specific Webhook URL

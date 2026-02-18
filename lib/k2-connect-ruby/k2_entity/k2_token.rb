@@ -14,41 +14,24 @@ module K2ConnectRuby
       def request_token
         result = K2ConnectRuby::K2Services::SendRequestTokenRequestService.call(@client_id, @client_secret)
 
-        if result.success?
-          @access_token = result.data[:response_body][:access_token]
-        else
-          raise(result.errors.first)
-        end
+        @access_token = result.data[:response_body][:access_token]
       end
 
       def revoke_token(access_token)
         result = K2ConnectRuby::K2Services::SendRevokeTokenRequestService.call(@client_id, @client_secret, access_token)
 
-        if result.success?
-          true
-        else
-          raise(result.errors.first)
-        end
+        true
       end
 
       def introspect_token(access_token)
         result = K2ConnectRuby::K2Services::SendIntrospectTokenRequestService.call(@client_id, @client_secret, access_token)
 
-        if result.success?
-          result.data[:response_body]
-        else
-          raise(result.errors.first)
-        end
+        result.data[:response_body]
       end
 
       def token_info(access_token)
         result = K2ConnectRuby::K2Services::SendTokenInfoRequestService.call(access_token)
-
-        if result.success?
-          result.data[:response_body]
-        else
-          raise(result.errors.first)
-        end
+        result.data[:response_body]
       end
 
       def validate_client_credentials(client_id, client_secret)
