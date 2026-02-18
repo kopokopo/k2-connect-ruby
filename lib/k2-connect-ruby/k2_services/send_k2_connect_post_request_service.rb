@@ -21,8 +21,12 @@ module K2ConnectRuby
       private
 
       def send_request
-        resource = RestClient::Resource.new(endpoint, open_timeout: 5, read_timeout: 10, headers: request_headers)
-        response = resource.post(request_body.to_json)
+        response = K2ConnectRuby::HttpClient.post(
+          endpoint,
+          payload: request_body.to_json,
+          headers: request_headers
+        )
+
         CallResult.success(
           {
             response_code: response.code,
@@ -30,16 +34,6 @@ module K2ConnectRuby
             response_body: response_body(response.body),
           },
         )
-      rescue RestClient::RequestTimeout => ex
-        CallResult.errors(["Request timed out."])
-      rescue RestClient::Unauthorized => ex
-        CallResult.errors(["Unauthorized access. Kindly check if your access token has expired."])
-      rescue RestClient::Exception => ex
-        CallResult.errors([rest_client_error(ex)&.dig("error_message")])
-      rescue Errno::ECONNREFUSED => ex
-        CallResult.errors(["Connection refused"])
-      rescue StandardError => ex
-        CallResult.errors([ex.message])
       end
 
       def request_headers

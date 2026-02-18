@@ -12,5 +12,6 @@ require "k2-connect-ruby/k2_services"
 require "k2-connect-ruby/entity"
 require "k2-connect-ruby/k2_errors"
 require "k2-connect-ruby/version"
+require "k2-connect-ruby/http_client"
 
 module K2ConnectRuby; end

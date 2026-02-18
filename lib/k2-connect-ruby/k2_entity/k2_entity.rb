@@ -26,11 +26,7 @@ module K2ConnectRuby
 
       def query(endpoint)
         result = K2ConnectRuby::K2Services::SendK2ConnectGetRequestService.call(access_token, endpoint)
-        if result.success?
-          @k2_response_body = result.data[:response_body]
-        else
-          raise(result.errors.first)
-        end
+        @k2_response_body = result.data[:response_body]
       end
     end
   end
