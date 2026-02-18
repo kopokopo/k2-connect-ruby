@@ -16,7 +16,7 @@ module K2ConnectRuby
           end
 
           def endpoint
-            K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient")
+            K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient")
           end
 
           def request_body

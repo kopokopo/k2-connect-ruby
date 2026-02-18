@@ -19,7 +19,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
           k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
           k2pay.add_external_recipient(params)
-          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
         end
 
         it "returns a location_url" do
@@ -55,7 +55,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "First name can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -75,7 +75,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Last name can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -95,7 +95,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Phone number can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -116,7 +116,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
 
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Phone number is invalid."))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -136,7 +136,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Phone number is invalid."))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -156,7 +156,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Phone number is invalid."))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -176,7 +176,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Email can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -196,7 +196,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Email is invalid."))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -218,7 +218,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
           k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
           k2pay.add_external_recipient(params)
-          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
         end
 
         it "returns a location_url" do
@@ -254,7 +254,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Account name can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -274,7 +274,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Account number can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -294,7 +294,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Bank branch ref can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -315,7 +315,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
           k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
           k2pay.add_external_recipient(params)
-          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
         end
 
         it "returns a location_url" do
@@ -349,7 +349,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Till name can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -368,7 +368,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Till number can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -390,7 +390,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
           k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
           k2pay.add_external_recipient(params)
-          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+          expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
         end
 
         it "returns a location_url" do
@@ -426,7 +426,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Paybill name can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -446,7 +446,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Paybill number can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -466,7 +466,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
             k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
             aggregate_failures do
               expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Paybill account number can't be blank"))
-              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+              expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
             end
           end
         end
@@ -488,7 +488,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
         k2pay = K2ConnectRuby::K2Entity::ExternalRecipient.new(access_token)
         aggregate_failures do
           expect { k2pay.add_external_recipient(params) }.to(raise_error(ArgumentError, "Undefined payment method."))
-          expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))))
+          expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))))
         end
       end
     end
@@ -584,7 +584,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::ExternalRecipient) do
   end
 
   def stub_add_recipient_request
-    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("pay_recipient"))
+    stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("external_recipient"))
       .to_return(status: 201, body: { data: "some_data" }.to_json, headers: { location: Faker::Internet.url })
   end
 end
