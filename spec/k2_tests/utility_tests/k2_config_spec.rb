@@ -24,7 +24,7 @@ RSpec.describe K2ConnectRuby::K2Utilities::Config::K2Config do
     end
 
     it "should retrieve Path variable URL (Outgoing payments)" do
-      expect { k2_config.endpoint("pay_recipient") }.not_to(raise_error)
+      expect { k2_config.endpoint("external_recipient") }.not_to(raise_error)
     end
 
     it "should retrieve Path variable URL (STK Push)" do
