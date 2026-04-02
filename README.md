@@ -96,7 +96,8 @@ Ensure the following arguments are passed:
  - event type `REQUIRED`
  - url `REQUIRED`
  - scope `REQUIRED`: is `till` if event_type is a buygoods_transaction_received, buygoods_transaction_reversed, b2b_transaction_received, card_transaction_received, card_transaction_voided or card_transaction_reversed and `company` if not
- - scope reference: is `REQUIRED` if scope is till
+ - scope_reference: is `REQUIRED` if scope is till
+ - enable_daraja_payload: `OPTIONAL`. By default, it is set to `false`
 
 Supported event types:
 - buygoods_transaction_received
@@ -118,7 +119,8 @@ your_request = {
   event_type: 'buygoods_transaction_received',
   url: callback_url,
   scope: 'till',
-  scope_reference: '112233'
+  scope_reference: '112233',
+  enable_daraja_payload: true
 }
 k2subscriber.webhook_subscribe(your_request)
 ```

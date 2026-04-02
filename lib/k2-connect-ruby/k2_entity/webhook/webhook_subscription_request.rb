@@ -7,7 +7,7 @@ module K2ConnectRuby
         class WebhookSubscriptionRequest
           include ActiveModel::Validations
 
-          attr_accessor :event_type, :url, :scope, :scope_reference
+          attr_accessor :event_type, :url, :scope, :scope_reference, :enable_daraja_payload
 
           validates :event_type, :url, :scope, presence: true
           validates :scope_reference, presence: true, if: :till_scope?
@@ -28,6 +28,7 @@ module K2ConnectRuby
             in: ["till", "company"],
             message: "must be one of 'till' or 'company'.",
           }
+          validate :validate_daraja_payload_flag, if: :enable_daraja_payload
 
           def initialize(kwargs)
             kwargs.each do |key, value|
@@ -45,11 +46,18 @@ module K2ConnectRuby
               url: url,
               scope: scope,
               scope_reference: scope_reference,
+              enable_daraja_payload: enable_daraja_payload || false,
             }
           end
 
           def till_scope?
             scope == "till"
+          end
+
+          def validate_daraja_payload_flag
+            unless event_type == "buygoods_transaction_received"
+              errors.add(:base, "Can only enable daraja_payloads for 'buygoods_transaction_received' webhooks.")
+            end
           end
         end
       end
