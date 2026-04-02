@@ -181,7 +181,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2FinancialEntities::Webhook::WebhookSub
         end
       end
 
-      context "with daraja_payload enabled for non C2B webhooks" do
+      context "with daraja_payload enabled for non C2B or B2B webhooks" do
         it "returns an invalid webhook_subscription_request" do
           params = {
             event_type: "buygoods_transaction_received",

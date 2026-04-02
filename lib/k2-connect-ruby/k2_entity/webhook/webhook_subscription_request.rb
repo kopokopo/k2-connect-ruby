@@ -55,8 +55,8 @@ module K2ConnectRuby
           end
 
           def validate_daraja_payload_flag
-            unless event_type == "buygoods_transaction_received"
-              errors.add(:base, "Can only enable daraja_payloads for 'buygoods_transaction_received' webhooks.")
+            unless event_type.in?(["buygoods_transaction_received", "b2b_transaction_received"])
+              errors.add(:base, "Can only enable daraja_payloads for 'buygoods_transaction_received' and 'b2b_transaction_received' webhooks.")
             end
           end
         end
