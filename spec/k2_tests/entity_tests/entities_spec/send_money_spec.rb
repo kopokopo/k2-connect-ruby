@@ -84,16 +84,17 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           end
         end
 
-        context "Invalid internationalized phone_number format" do
+        context "Invalid phone_number format" do
           it "raises an error and does not send a send money request" do
             stub_access_token_request
             stub_send_money_request
+            phone_number = "255716230902"
             params = {
               destinations: [
                 {
                   type: "mobile_wallet",
                   network: "Safaricom",
-                  phone_number: "+255916230902",
+                  phone_number: phone_number,
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
                   description: "pay via K2 Connect",
@@ -106,22 +107,23 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number is invalid."))
+              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
         end
 
-        context "Invalid nationalized phone_number format" do
+        context "Phone_number length is less than 12 characters" do
           it "raises an error and does not send a send money request" do
             stub_access_token_request
             stub_send_money_request
+            phone_number = "0716230902"
             params = {
               destinations: [
                 {
                   type: "mobile_wallet",
                   network: "Safaricom",
-                  phone_number: "255716230902",
+                  phone_number: "0716230902",
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
                   description: "pay via K2 Connect",
@@ -134,22 +136,23 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number is invalid."))
+              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
         end
 
-        context "Invalid local phone_number format" do
+        context "Phone_number length is more than 12 characters" do
           it "raises an error and does not send a send money request" do
             stub_access_token_request
             stub_send_money_request
+            phone_number = "+254716230902"
             params = {
               destinations: [
                 {
                   type: "mobile_wallet",
                   network: "Safaricom",
-                  phone_number: "0916230902",
+                  phone_number: "+254716230902",
                   nickname: Faker::Name.name,
                   amount: Faker::Number.number(digits: 4),
                   description: "pay via K2 Connect",
@@ -162,7 +165,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number is invalid."))
+              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end

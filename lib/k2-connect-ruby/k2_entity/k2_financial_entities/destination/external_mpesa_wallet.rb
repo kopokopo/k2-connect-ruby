@@ -12,8 +12,7 @@ module K2ConnectRuby
           attr_accessor :phone_number, :network
 
           validates :phone_number, :description, presence: true
-
-          validates_with K2ConnectRuby::K2Utilities::PhoneNumberValidator
+          validate :phone_number_format
 
           def destination_payload
             {
@@ -25,6 +24,12 @@ module K2ConnectRuby
               description: description,
               favourite: favourite,
             }
+          end
+
+          def phone_number_format
+            unless phone_number&.match?(/^(254\d{9})$/)
+              errors.add(:phone_number, "#{phone_number} has an invalid length or format. Must be 2547XXXXXXXX.")
+            end
           end
         end
       end
