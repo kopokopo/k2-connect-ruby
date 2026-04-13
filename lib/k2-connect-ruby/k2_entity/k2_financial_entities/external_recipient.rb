@@ -8,13 +8,13 @@ module K2ConnectRuby
 
       def add_external_recipient(params)
         params = params.with_indifferent_access
-        pay_recipient = build_recipient(params)
-        raise(ArgumentError, pay_recipient.errors.full_messages.first) unless pay_recipient.valid?
+        external_recipient = build_recipient(params)
+        raise(ArgumentError, external_recipient.errors.full_messages.first) unless external_recipient.valid?
 
         result = K2ConnectRuby::K2Services::SendK2ConnectPostRequestService.call(
           access_token,
-          pay_recipient.endpoint,
-          pay_recipient.request_body,
+          external_recipient.endpoint,
+          external_recipient.request_body,
         )
         if result.success?
           @recipients_location_url = result.data[:response_headers][:location]

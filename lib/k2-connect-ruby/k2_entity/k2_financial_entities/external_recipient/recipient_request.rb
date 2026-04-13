@@ -22,7 +22,7 @@ module K2ConnectRuby
           def request_body
             {
               type: type,
-              pay_recipient: self.as_json
+              external_recipient: self.as_json
             }
           end
         end
