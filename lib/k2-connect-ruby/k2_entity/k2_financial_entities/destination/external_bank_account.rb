@@ -22,7 +22,7 @@ module K2ConnectRuby
               bank_branch_ref: bank_branch_ref,
               amount: amount,
               description: description,
-              favourite: favourite,
+              favourite: ActiveModel::Type::Boolean.new.cast(favourite)
             }
           end
         end

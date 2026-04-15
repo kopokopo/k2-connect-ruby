@@ -21,7 +21,7 @@ module K2ConnectRuby
               paybill_account_number: paybill_account_number,
               amount: amount,
               description: description,
-              favourite: favourite,
+              favourite: ActiveModel::Type::Boolean.new.cast(favourite)
             }
           end
         end
