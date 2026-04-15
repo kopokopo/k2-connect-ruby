@@ -354,6 +354,7 @@ Send to **External Mobile Recipient**
 - first_name
 - last_name
 - nickname
+- favourite
 
 Send to **External Bank account Recipient**
 - type: 'bank_account' `REQUIRED`
@@ -363,6 +364,7 @@ Send to **External Bank account Recipient**
 - description `REQUIRED`
 - bank_branch_ref `REQUIRED`
 - nickname
+- favourite
 
 Send to **External Paybill Recipient**
 - type: 'paybill' `REQUIRED`
@@ -371,6 +373,7 @@ Send to **External Paybill Recipient**
 - paybill_name
 - description `REQUIRED`
 - nickname
+- favourite
 
 Send to **External Till Recipient**
 - type: 'till' `REQUIRED`
@@ -378,6 +381,7 @@ Send to **External Till Recipient**
 - till_name
 - description `REQUIRED`
 - nickname
+- favourite
 
 Send to **My Mobile Phone**
 - type: 'merchant_wallet' `REQUIRED`

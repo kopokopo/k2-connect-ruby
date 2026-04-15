@@ -20,7 +20,7 @@ module K2ConnectRuby
               till_number: till_number,
               amount: amount,
               description: description,
-              favourite: favourite,
+              favourite: ActiveModel::Type::Boolean.new.cast(favourite)
             }
           end
         end

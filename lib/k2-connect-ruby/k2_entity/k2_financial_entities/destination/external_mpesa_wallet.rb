@@ -22,13 +22,13 @@ module K2ConnectRuby
               network: network,
               amount: amount,
               description: description,
-              favourite: favourite,
+              favourite: ActiveModel::Type::Boolean.new.cast(favourite)
             }
           end
 
           def phone_number_format
             unless phone_number&.match?(/^(254\d{9})$/)
-              errors.add(:phone_number, "#{phone_number} has an invalid length or format. Must be 2547XXXXXXXX.")
+              errors.add(:phone_number, "#{phone_number} has an invalid length or format. Must be 254XXXXXXXXX.")
             end
           end
         end
