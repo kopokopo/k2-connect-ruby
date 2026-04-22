@@ -25,8 +25,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -49,9 +49,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -76,9 +76,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -105,9 +105,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -134,9 +134,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -163,9 +163,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -191,9 +191,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -224,8 +224,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -250,9 +250,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -278,9 +278,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Account name can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Account name can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -307,9 +307,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Account number can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Account number can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -336,9 +336,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Bank branch ref can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Bank branch ref can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -365,9 +365,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -396,8 +396,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -420,9 +420,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -446,9 +446,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Till number can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Till number can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -473,9 +473,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -505,8 +505,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -530,9 +530,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -557,9 +557,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Paybill number can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Paybill number can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -585,9 +585,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Paybill account number can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Paybill account number can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -613,9 +613,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -642,8 +642,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -664,9 +664,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -688,9 +688,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Reference can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Reference can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -713,9 +713,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -742,8 +742,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -764,9 +764,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -788,9 +788,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: Faker::Internet.url,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Reference can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Reference can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -813,9 +813,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -835,8 +835,8 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
           expect(WebMock).to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("send_money"))))
         end
 
@@ -850,9 +850,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             callback_url: Faker::Internet.url,
           }
           access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-          k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-          k2pay.create_payment(params)
-          expect(k2pay.payments_location_url).not_to(eq(nil))
+          send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+          send_money.create_payment(params)
+          expect(send_money.payments_location_url).not_to(eq(nil))
         end
       end
 
@@ -868,9 +868,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
               callback_url: nil,
             }
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-            k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+            send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Callback url can't be blank"))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -899,9 +899,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
         aggregate_failures do
-          expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Undefined destination type."))
+          expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Undefined destination type."))
           expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
         end
       end
@@ -926,9 +926,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
         aggregate_failures do
-          expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Currency can't be blank"))
+          expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Currency can't be blank"))
           expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
         end
       end
@@ -954,9 +954,9 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
         aggregate_failures do
-          expect { k2pay.create_payment(params) }.to(raise_error(ArgumentError, "Currency must be 'KES'."))
+          expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Currency must be 'KES'."))
           expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
         end
       end
@@ -984,12 +984,12 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-        k2pay.create_payment(params)
-        stub_request(:get, k2pay.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money.create_payment(params)
+        stub_request(:get, send_money.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
         aggregate_failures do
-          expect { k2pay.query_status }.not_to(raise_error)
-          expect(WebMock).to(have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(k2pay.payments_location_url))))
+          expect { send_money.query_status }.not_to(raise_error)
+          expect(WebMock).to(have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(send_money.payments_location_url))))
         end
       end
 
@@ -1013,11 +1013,11 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-        k2pay.create_payment(params)
-        stub_request(:get, k2pay.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
-        k2pay.query_status
-        expect(k2pay.k2_response_body).not_to(eq(nil))
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money.create_payment(params)
+        stub_request(:get, send_money.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
+        send_money.query_status
+        expect(send_money.k2_response_body).not_to(eq(nil))
       end
     end
   end
@@ -1044,12 +1044,12 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-        k2pay.create_payment(params)
-        stub_request(:get, k2pay.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money.create_payment(params)
+        stub_request(:get, send_money.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
         aggregate_failures do
-          expect { k2pay.query_resource(k2pay.payments_location_url) }.not_to(raise_error)
-          expect(WebMock).to(have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(k2pay.payments_location_url))))
+          expect { send_money.query_resource(send_money.payments_location_url) }.not_to(raise_error)
+          expect(WebMock).to(have_requested(:get, K2ConnectRuby::K2Utilities::K2UrlParse.remove_localhost(URI.parse(send_money.payments_location_url))))
         end
       end
 
@@ -1073,11 +1073,11 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
           callback_url: Faker::Internet.url,
         }
         access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
-        k2pay = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
-        k2pay.create_payment(params)
-        stub_request(:get, k2pay.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
-        k2pay.query_resource(k2pay.payments_location_url)
-        expect(k2pay.k2_response_body).not_to(eq(nil))
+        send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+        send_money.create_payment(params)
+        stub_request(:get, send_money.payments_location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
+        send_money.query_resource(send_money.payments_location_url)
+        expect(send_money.k2_response_body).not_to(eq(nil))
       end
     end
   end

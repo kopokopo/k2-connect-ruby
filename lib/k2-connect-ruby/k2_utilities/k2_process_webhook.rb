@@ -8,10 +8,18 @@ module K2ConnectRuby
       def process(payload, secret_key, signature)
         raise ArgumentError, "Empty/Nil Request Body Argument!" if payload.blank?
 
-        check_topic(payload) if K2ConnectRuby::K2Utilities::K2Authenticator.authenticate(payload, secret_key, signature)
+        process_webhook(payload) if K2ConnectRuby::K2Utilities::K2Authenticator.authenticate(payload, secret_key, signature)
       end
 
-      def check_topic(payload)
+      def process_webhook(payload)
+        if daraja_payload?(payload)
+          K2ConnectRuby::K2Services::Payloads::DarajaWebhooks.new(payload)
+        else
+          process_k2_connect_payload(payload)
+        end
+      end
+
+      def process_k2_connect_payload(payload)
         result_topic = payload.dig("topic")
         case result_topic
           # Buygoods Transaction Received
@@ -20,9 +28,12 @@ module K2ConnectRuby
           # Buygoods Transaction Reversed
         when "buygoods_transaction_reversed"
           K2ConnectRuby::K2Services::Payloads::Webhooks::BuygoodsTransactionReversed.new(payload)
-          # B2b Transaction
+          # B2B Transaction
         when "b2b_transaction_received"
           K2ConnectRuby::K2Services::Payloads::Webhooks::B2bTransactionReceived.new(payload)
+          # B2B Transaction Reversed
+        when "b2b_transaction_reversed"
+          K2ConnectRuby::K2Services::Payloads::Webhooks::B2bTransactionReversed.new(payload)
           # Settlement Transfer
         when "settlement_transfer_completed"
           K2ConnectRuby::K2Services::Payloads::Webhooks::TransferWebhook.new(payload)
@@ -32,6 +43,10 @@ module K2ConnectRuby
         else
           raise ArgumentError, "No Other Specified Event!"
         end
+      end
+
+      def daraja_payload?(payload)
+        payload.key?("TransactionType")
       end
 
       # Returns a Hash Object

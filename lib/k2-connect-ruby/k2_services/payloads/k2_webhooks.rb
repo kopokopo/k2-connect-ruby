@@ -50,6 +50,7 @@ module K2ConnectRuby
         attr_reader :system,
           :till_number,
           :sender_phone_number,
+          :hashed_sender_phone,
           :sender_first_name,
           :sender_last_name
 
@@ -58,6 +59,7 @@ module K2ConnectRuby
           @system = payload.dig("event", "resource", "system")
           @till_number = payload.dig("event", "resource", "till_number")
           @sender_phone_number = payload.dig("event", "resource", "sender_phone_number")
+          @hashed_sender_phone = payload.dig("event", "resource", "hashed_sender_phone")
           @sender_first_name = payload.dig("event", "resource", "sender_first_name")
           @sender_last_name = payload.dig("event", "resource", "sender_last_name")
         end

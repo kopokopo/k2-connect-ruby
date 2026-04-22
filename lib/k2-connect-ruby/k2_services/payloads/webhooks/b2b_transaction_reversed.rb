@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 module K2ConnectRuby
   module K2Services
     module Payloads
       module Webhooks
-        class B2bTransactionReceived < K2CommonEvents
+        class B2bTransactionReversed < K2CommonEvents
           attr_reader :sending_till,
             :till_number
 

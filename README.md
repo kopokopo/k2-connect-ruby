@@ -103,6 +103,7 @@ Supported event types:
 - buygoods_transaction_received
 - buygoods_transaction_reversed
 - b2b_transaction_received
+- b2b_transaction_reversed
 - card_transaction_received
 - card_transaction_voided
 - card_transaction_reversed
@@ -338,7 +339,7 @@ Creating an Outgoing Payment to a third party.
     
 The following arguments should be passed within a hash:
 
-- destinations (array of hashes) `REQUIRED`
+- destinations (array of hashes). `REQUIRED` unless doing send money sweep of available funds
 - currency `KES` expected
 - source_identifier
 - callback_url `REQUIRED`
@@ -425,6 +426,9 @@ params = {
   ],
   currency: "KES",
   source_identifier: nil,
+  metadata: {
+    order_no: "ORD192832",
+  },
   callback_url: Faker::Internet.url,
 }
 access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
@@ -444,6 +448,21 @@ params = {
       amount: "1000",
     },
   ],
+  currency: "KES",
+  source_identifier: nil,
+  callback_url: callback_url,
+}
+access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
+send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
+send_money.create_payment(params)
+```
+
+Code example of send money to my accounts (Sweep all available funds);
+
+```ruby
+# Send money to my accounts
+params = {
+  destinations: [],
   currency: "KES",
   source_identifier: nil,
   callback_url: callback_url,
@@ -624,6 +643,7 @@ k2_payment_links.query_status
 # Get status of specific payment link
 k2_payment_links.query_resource(location_url)
 ```
+
 ### Parsing the JSON Payload
 
 The K2Client class will be use to parse the Payload received from Kopo Kopo, and to further consume the webhooks and split the responses into components, the K2Authenticator and
@@ -668,6 +688,7 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `reference`
     - `origination_time`
     - `sender_phone_number`
+    - `hashed_sender_phone`
     - `amount`
     - `currency`
     - `till_number`
@@ -695,8 +716,8 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `sender_first_name`
     - `sender_last_name`
     - `links_self`
-    - `links_resource` 
-    
+    - `links_resource`
+
 3. Settlement Transfer:
     - `id`
     - `resource_id`
@@ -751,7 +772,23 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_resource`
     - `sending_till`
 
-6. Card Transaction Received
+6. B2B Transaction Reversed:
+    - `id`
+    - `resource_id`
+    - `topic`
+    - `created_at`
+    - `event_type`
+    - `reference`
+    - `origination_time`
+    - `amount`
+    - `currency`
+    - `till_number`
+    - `status`
+    - `links_self`
+    - `links_resource`
+    - `sending_till`
+
+7. Card Transaction Received
     - `id`
     - `resource_id`
     - `topic`
@@ -768,7 +805,7 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_resource`
     - `settled`
 
-7. Card Transaction Reversed:
+8. Card Transaction Reversed:
     - `id`
     - `resource_id`
     - `topic`
@@ -784,23 +821,23 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_self`
     - `links_resource`
 
-8. Card Transaction Voided (External Till to Till):
-    - `id`
-    - `resource_id`
-    - `topic`
-    - `created_at`
-    - `event_type`
-    - `reference`
-    - `origination_time`
-    - `amount`
-    - `currency`
-    - `till_number`
-    - `customer_cc_number`
-    - `status`
-    - `links_self`
-    - `links_resource`
+9. Card Transaction Voided:
+   - `id`
+   - `resource_id`
+   - `topic`
+   - `created_at`
+   - `event_type`
+   - `reference`
+   - `origination_time`
+   - `amount`
+   - `currency`
+   - `till_number`
+   - `customer_cc_number`
+   - `status`
+   - `links_self`
+   - `links_resource`
     
-9. Process STK Push Payment Request Result
+10. Process STK Push Payment Request Result
     - `id`
     - `type`
     - `initiation_time`
@@ -823,7 +860,7 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_self`
     - `callback_url`
 
-10. Process Send money Result
+11. Process Send money Result
     - `id`
     - `type`
     - `created_at`
@@ -835,7 +872,7 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `links_self`
     - `callback_url`
 
-11. Reversal Result
+12. Reversal Result
     - `id`
     - `type`
     - `transaction_reference`
@@ -848,16 +885,16 @@ k2_components = K2ConnectRuby::K2Utilities::K2ProcessResult.process(k2_parse.has
     - `callback_url`
     - `links_self`
 
-12. Payment Link Result
+13. Payment Link Result
     - `id`
     - `type`
     - `status`
     - `created_at`
     - `till_name`
     - `till_number`
+    - `payment_reference`
     - `currency`
     - `amount`
-    - `payment_reference`
     - `note`
     - `payment_link`
     - `errors`
@@ -884,7 +921,7 @@ Sample Web Application examples written in Rails and Sinatra frameworks that uti
 
  - [Sinatra example application](https://github.com/DavidKar1uk1/kt_tips)
  
- ##### Take Note; the Library is optimized for Rails frameworks version 5.
+ ##### Take Note; the Library is optimized for Rails frameworks version 8.
 
 ## Development
 
