@@ -13,7 +13,7 @@ module K2ConnectRuby
         result = K2ConnectRuby::K2Services::SendK2ConnectPostRequestService.call(
           access_token,
           payment_link_request.endpoint,
-          payment_link_request.request_body
+          payment_link_request.request_body,
         )
         raise(result.errors.first) unless result.success?
 
@@ -24,7 +24,7 @@ module K2ConnectRuby
         result = K2ConnectRuby::K2Services::SendK2ConnectPostRequestService.call(
           access_token,
           "#{resource_url}/cancel",
-          nil
+          nil,
         )
         raise(result.errors.first) unless result.success?
 
@@ -45,7 +45,7 @@ module K2ConnectRuby
           payment_reference: params[:payment_reference],
           note: params[:note],
           metadata: params[:metadata],
-          callback_url: params[:callback_url]
+          callback_url: params[:callback_url],
         )
       end
     end

@@ -27,7 +27,9 @@ module K2ConnectRuby
               payment_reference: payment_reference,
               note: note,
               metadata: metadata,
-              callback_url: callback_url
+              _links: {
+                callback_url: callback_url,
+              },
             }
           end
 
