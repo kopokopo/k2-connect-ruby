@@ -3,6 +3,10 @@ module K2ConnectRuby
     module Payloads
       module Webhooks
         class BuygoodsTransactionReversed < Buygoods
+          include ActiveModel::Validations
+
+          validates :topic, comparison: { equal_to: "buygoods_transaction_reversed" }
+
           def initialize(payload)
             super
           end
