@@ -5,6 +5,10 @@ module K2ConnectRuby
     module Payloads
       module Webhooks
         class BuygoodsTransactionReceived < Buygoods
+          include ActiveModel::Validations
+
+          validates :topic, comparison: { equal_to: "buygoods_transaction_received" }
+
           def initialize(payload)
             super
           end

@@ -107,7 +107,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 254XXXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -136,7 +136,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 254XXXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end
@@ -165,7 +165,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::SendMoney) do
             access_token = K2ConnectRuby::K2Entity::K2Token.new("client_id", "client_secret").request_token
             send_money = K2ConnectRuby::K2Entity::SendMoney.new(access_token)
             aggregate_failures do
-              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 2547XXXXXXXX."))
+              expect { send_money.create_payment(params) }.to(raise_error(ArgumentError, "Phone number #{phone_number} has an invalid length or format. Must be 254XXXXXXXXX."))
               expect(WebMock).not_to(have_requested(:post, URI.parse(K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payments"))))
             end
           end

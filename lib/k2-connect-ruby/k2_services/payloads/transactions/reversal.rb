@@ -9,23 +9,24 @@ module K2ConnectRuby
           include ActiveModel::Validations
 
           attr_reader :id, :type, :transaction_reference, :reason, :status, :created_at, :reversal_bulk_payment,
-                      :request_errors, :metadata, :callback_url, :links_self
+            :request_errors, :metadata, :callback_url, :links_self
 
-          validates :id, :type, :transaction_reference, :reason, :status, :created_at, :callback_url, :link_self,
-                    presence: true
+          validates :id, :type, :transaction_reference, :reason, :status, :created_at, :callback_url, :links_self,
+            presence: true
+          validates :type, comparison: { equal_to: "reversal" }
 
           def initialize(payload)
-            @id = payload["id"]
-            @type = payload["type"]
-            @transaction_reference = payload["attributes"]["transaction_reference"]
-            @status = payload.dig("attributes", "status")
-            @created_at = payload.dig("attributes", "created_at")
-            @reason = payload.dig("attributes", "reason")
-            @reversal_bulk_payment = payload.dig("attributes", "reversal_bulk_payment")&.deep_symbolize_keys
-            @metadata = payload.dig("attributes", "metadata")&.deep_symbolize_keys
-            @request_errors = payload.dig("attributes", "errors")
-            @callback_url = payload.dig("attributes", "_links", "callback_url")
-            @links_self = payload.dig("attributes", "_links", "self")
+            @id = payload.dig("data", "id")
+            @type = payload.dig("data", "type")
+            @transaction_reference = payload.dig("data", "attributes", "transaction_reference")
+            @status = payload.dig("data", "attributes", "status")
+            @created_at = payload.dig("data", "attributes", "created_at")
+            @reason = payload.dig("data", "attributes", "reason")
+            @reversal_bulk_payment = payload.dig("data", "attributes", "reversal_bulk_payment")&.deep_symbolize_keys
+            @metadata = payload.dig("data", "attributes", "metadata")&.deep_symbolize_keys
+            @request_errors = payload.dig("data", "attributes", "errors")
+            @links_self = payload.dig("data", "attributes", "_links", "self")
+            @callback_url = payload.dig("data", "attributes", "_links", "callback_url")
           end
         end
       end

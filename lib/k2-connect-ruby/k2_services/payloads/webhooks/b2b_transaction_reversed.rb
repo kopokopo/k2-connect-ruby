@@ -3,6 +3,10 @@ module K2ConnectRuby
     module Payloads
       module Webhooks
         class B2bTransactionReversed < K2CommonEvents
+          include ActiveModel::Validations
+
+          validates :topic, comparison: { equal_to: "b2b_transaction_reversed" }
+
           attr_reader :sending_till,
             :till_number
 

@@ -22,7 +22,7 @@ module K2ConnectRuby
               network: network,
               amount: amount,
               description: description,
-              favourite: ActiveModel::Type::Boolean.new.cast(favourite)
+              favourite: ActiveModel::Type::Boolean.new.cast(favourite),
             }
           end
 

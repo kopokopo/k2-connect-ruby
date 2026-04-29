@@ -20,7 +20,7 @@ module K2ConnectRuby
           K2ConnectRuby::K2Services::Payloads::Transactions::IncomingPayment.new(payload)
         when "send_money"
           K2ConnectRuby::K2Services::Payloads::Transactions::SendMoneyPayment.new(payload)
-        when "reversals"
+        when "reversal"
           K2ConnectRuby::K2Services::Payloads::Transactions::Reversal.new(payload)
         when "payment_link"
           K2ConnectRuby::K2Services::Payloads::Transactions::PaymentLink.new(payload)
@@ -30,7 +30,7 @@ module K2ConnectRuby
       end
 
       # Returns a Hash Object
-      def return_obj_hash(instance_hash = HashWithIndifferentAccess.new, obj)
+      def return_obj_hash(obj, instance_hash = HashWithIndifferentAccess.new)
         obj.instance_variables.each do |value|
           instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
         end
@@ -38,7 +38,7 @@ module K2ConnectRuby
       end
 
       # Returns an Array Object
-      def return_obj_array(instance_array = [], obj)
+      def return_obj_array(obj, instance_array = [])
         obj.instance_variables.each do |value|
           instance_array << obj.instance_variable_get(value)
         end

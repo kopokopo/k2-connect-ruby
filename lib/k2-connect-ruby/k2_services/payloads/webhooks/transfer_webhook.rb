@@ -1,8 +1,14 @@
+# frozen_string_literal: true
+
 module K2ConnectRuby
   module K2Services
     module Payloads
       module Webhooks
         class TransferWebhook < K2CommonEvents
+          include ActiveModel::Validations
+
+          validates :topic, comparison: { equal_to: "settlement_transfer_completed" }
+
           attr_reader :disbursements,
             :destination_type,
             :destination_network,

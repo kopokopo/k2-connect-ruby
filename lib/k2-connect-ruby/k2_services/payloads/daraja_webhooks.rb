@@ -4,6 +4,8 @@ module K2ConnectRuby
   module K2Services
     module Payloads
       class DarajaWebhooks
+        include ActiveModel::Validations
+
         attr_reader :transaction_type,
           :transaction_id,
           :transaction_time,
@@ -17,6 +19,8 @@ module K2ConnectRuby
           :first_name,
           :middle_name,
           :last_name
+
+        validates :transaction_type, :transaction_id, :transaction_time, :transaction_amount, presence: true
 
         def initialize(payload)
           @transaction_type = payload.dig("TransactionType")

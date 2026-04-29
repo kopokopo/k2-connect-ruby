@@ -15,7 +15,7 @@ module K2ConnectRuby
           private
 
           def valid_payment_type
-            raise ArgumentError, "Wrong Payment Type" unless @type.eql?("payment")
+            raise ArgumentError, "Wrong Payment Type" unless @type.eql?("send_money")
           end
 
         end

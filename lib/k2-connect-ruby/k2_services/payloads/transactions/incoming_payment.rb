@@ -19,7 +19,7 @@ module K2ConnectRuby
             :sender_first_name,
             :sender_middle_name,
             :sender_last_name,
-            :errors
+            :k2_errors
 
           def initialize(payload)
             super
@@ -40,7 +40,7 @@ module K2ConnectRuby
             @sender_middle_name = payload.dig("data", "attributes", "event", "resource", "sender_middle_name")
             @sender_last_name = payload.dig("data", "attributes", "event", "resource", "sender_last_name")
             # Errors
-            @errors = payload.dig("data", "attributes", "event", "errors")
+            @k2_errors = payload.dig("data", "attributes", "event", "errors")
           end
 
           private

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require "faker"
 
-RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
+RSpec.describe(K2ConnectRuby::K2Utilities::K2ProcessResult) do
   let(:k2_process_result) { K2ConnectRuby::K2Utilities::K2ProcessResult }
   let(:stk) do
     HashWithIndifferentAccess.new("data": {
@@ -23,20 +25,20 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
             "status": "Received",
             "sender_first_name": "Joe",
             "sender_middle_name": nil,
-            "sender_last_name": "Buyer"
+            "sender_last_name": "Buyer",
           },
-          "errors": nil
+          "errors": nil,
         },
         "metadata": {
           "customer_id": "123456789",
           "reference": "123456",
-          "notes": "Payment for invoice 12345"
+          "notes": "Payment for invoice 12345",
         },
         "_links": {
           "callback_url": "https://webhook.site/675d4ef4-0629-481f-83cd-d101f55e4bc8",
-          "self": "http://sandbox.kopokopo.com/api/v1/incoming_payments/a652f86f-f2aa-4d70-baa2-ccfe4b78f4fc"
-        }
-      }
+          "self": "http://sandbox.kopokopo.com/api/v1/incoming_payments/a652f86f-f2aa-4d70-baa2-ccfe4b78f4fc",
+        },
+      },
     })
   end
   let(:pay) do
@@ -48,7 +50,7 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
         "created_at": "2021-01-28T10:00:17.827+03:00",
         "amount": {
           "currency": "KES",
-          "value": 780
+          "value": 780,
         },
         "transfer_batches": [
           {
@@ -60,21 +62,21 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
                 "destination_type": "Mobile Wallet",
                 "origination_time": "2020-11-13T08:32:03.000+03:00",
                 "destination_reference": "0fcb2f42-9372-4a6c-8c2f-3fd977c548e8",
-                "transaction_reference": "LBA10034460"
-              }
-            ]
-          }
+                "transaction_reference": "LBA10034460",
+              },
+            ],
+          },
         ],
         "metadata": {
           "notes": "Salary payment for May 2018",
           "customerId": "8675309",
-          "something_else": "Something else"
+          "something_else": "Something else",
         },
         "_links": {
           "callback_url": "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a",
-          "self": "https://sandbox.kopokopo.com/api/v1/payments/c6fda139-2480-4a93-95ed-f72c66b92364"
-        }
-      }
+          "self": "https://sandbox.kopokopo.com/api/v1/payments/c6fda139-2480-4a93-95ed-f72c66b92364",
+        },
+      },
     })
   end
   let(:mobile_wallet_transfer) do
@@ -86,7 +88,7 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
         "created_at": "2021-01-27T10:57:09.838+03:00",
         "amount": {
           "currency": "KES",
-          "value": nil
+          "value": nil,
         },
         "transfer_batches": [
           {
@@ -98,9 +100,9 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
                 "destination_type": "Mobile Wallet",
                 "origination_time": "2021-01-06T12:42:36.000+03:00",
                 "destination_reference": "17067bf7-648e-424c-af0f-8c541a1b4ec3",
-                "transaction_reference": "LDLJANAPH26"
-              }
-            ]
+                "transaction_reference": "LDLJANAPH26",
+              },
+            ],
           },
           {
             "status": "Transferred",
@@ -111,7 +113,7 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
                 "destination_type": "Bank Account",
                 "origination_time": "2021-01-27T10:57:58.623+03:00",
                 "destination_reference": "34a273d1-fedc-4610-8ab6-a1ba4828f317",
-                "transaction_reference": nil
+                "transaction_reference": nil,
               },
               {
                 "amount": "25000.0",
@@ -119,16 +121,16 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
                 "destination_type": "Bank Account",
                 "origination_time": "2021-01-27T10:57:58.627+03:00",
                 "destination_reference": "34a273d1-fedc-4610-8ab6-a1ba4828f317",
-                "transaction_reference": nil
-              }
-            ]
-          }
+                "transaction_reference": nil,
+              },
+            ],
+          },
         ],
         "_links": {
           "callback_url": "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a",
-          "self": "https://sandbox.kopokopo.com/api/v1/settlement_transfers/01aece24-e596-4f5c-9ace-9eb1a0939dda"
-        }
-      }
+          "self": "https://sandbox.kopokopo.com/api/v1/settlement_transfers/01aece24-e596-4f5c-9ace-9eb1a0939dda",
+        },
+      },
     })
   end
   let(:mobile_send_money_payment) do
@@ -149,9 +151,9 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
               destination_type: "Mobile Wallet",
               origination_time: Time.now.to_s,
               destination_reference: "17067bf7-648e-424c-af0f-8c541a1b4ec3",
-              transaction_reference: "LDLJANAPH26"
-            }
-          ]
+              transaction_reference: "LDLJANAPH26",
+            },
+          ],
         },
         {
           status: "Transferred",
@@ -162,7 +164,7 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
               destination_type: "Bank Account",
               origination_time: Time.now.to_s,
               destination_reference: SecureRandom.uuid,
-              transaction_reference: nil
+              transaction_reference: nil,
             },
             {
               amount: "25000.0",
@@ -170,17 +172,17 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
               destination_type: "Bank Account",
               origination_time: Time.now.to_s,
               destination_reference: SecureRandom.uuid,
-              transaction_reference: nil
-            }
-          ]
-        }
+              transaction_reference: nil,
+            },
+          ],
+        },
       ],
       errors: [],
       metadata: {},
       _links: {
         callback_url: Faker::Internet.url,
         self: Faker::Internet.url,
-      }
+      },
     }
   end
   let(:external_wallet_send_money_result) do
@@ -200,8 +202,8 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
               nickname: "Test",
               favourite: true,
               description: "Testing",
-              phone_number: "254700000000"
-            }
+              phone_number: "254700000000",
+            },
           ],
           currency: "KES",
           transfer_batches: [
@@ -219,60 +221,171 @@ RSpec.describe K2ConnectRuby::K2Utilities::K2ProcessResult do
                   destination_type: "mobile_wallet",
                   origination_time: "2025-09-08T09:02:16.069+03:00",
                   destination_reference: "9764ef5f-fcd6-42c1-bbff-de280becc64b",
-                  transaction_reference: "DAVSM1757311336"
-                }
-              ]
-            }
+                  transaction_reference: "DAVSM1757311336",
+                },
+              ],
+            },
           ],
           errors: nil,
           metadata: {
             notes: "Salary payment for March 2025",
-            customerId: "8675309"
+            customerId: "8675309",
           },
           _links: {
             callback_url: "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a",
-            self: "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a"
-          }
-        }
-      }
+            self: "https://webhook.site/3856ff77-93eb-4130-80cd-e62dc0db5c1a",
+          },
+        },
+      },
     }
   end
+  let(:reversal) do
+    HashWithIndifferentAccess.new(
+      {
+        "data": {
+          "id": "326e7f56-ba94-4264-b380-43be64113554",
+          "type": "reversal",
+          "attributes": {
+            "status": "Processed",
+            "created_at": "2026-04-29T19:45:07.978+03:00",
+            "transaction_reference": "DAV1777481072",
+            "reason": "Testing",
+            "reversal_bulk_payment": {
+              "amount": "201.0",
+              "status": "Transferred",
+              "origination_time": "2026-04-29T19:44:32.361+03:00",
+              "transaction_reference": "DAVREV1777481249",
+            },
+            "errors": nil,
+            "metadata": {
+              "name": "Test",
+            },
+            "_links": {
+              "callback_url": "https://webhook.site/2b326972-35a7-40af-bbd7-4bd77aec0e92",
+              "self": "https://api.kopokopo.com/api/v2/reversals/326e7f56-ba94-4264-b380-43be64113554",
+            },
+          },
+        },
+      },
+    )
+  end
+  let(:payment_link) do
+    HashWithIndifferentAccess.new(
+      {
+        "data": {
+          "id": "07f179dd-37cd-4c72-8d4c-b0798957f0a4",
+          "type": "payment_link",
+          "attributes": {
+            "status": "Processed",
+            "created_at": "2026-04-29T20:02:00.298+03:00",
+            "till_name": "David Kariuki Mwangi",
+            "till_number": "4000004",
+            "payment_reference": "daud",
+            "currency": "KES",
+            "amount": 3101,
+            "note": "Notes",
+            "payment_link": {
+              "status": "Paid",
+              "expires_at": "2026-05-06T20:02:00.310+03:00",
+              "link": "https://demo.kopokopo.com/links/4ea14513-d459-4a3c-9ba8-71c8e266488a",
+              "transaction_reference": "DAVSTK1777482274",
+              "sender_phone_number": 254716230902,
+              "origination_time": "2026-04-29T20:04:34.000+03:00",
+            },
+            "errors": nil,
+            "metadata": {
+              "something": "test",
+              "something_else": "Test data",
+            },
+            "_links": {
+              "callback_url": "https://webhook.site/2b326972-35a7-40af-bbd7-4bd77aec0e92",
+              "self": "https://api.kopokopo.com/api/v2/payment_links/07f179dd-37cd-4c72-8d4c-b0798957f0a4",
+            },
+          },
+        },
+      },
+    )
+  end
 
-  describe '#process' do
-    it 'should raise an error if argument is empty' do
-      expect { k2_process_result.process('', '', '') }.to raise_error ArgumentError, 'Empty/Nil Request Body Argument!'
+  describe "#process" do
+    it "should raise an error if argument is empty" do
+      expect { k2_process_result.process("", "", "") }.to(raise_error(ArgumentError, "Empty/Nil Request Body Argument!"))
     end
 
-    context 'Process Stk Result' do
-      it 'processes successfully' do
-        expect { k2_process_result.process(stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480') }.not_to(raise_error)
+    context "Process Stk Result" do
+      it "processes successfully" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        expect { k2_process_result.process(stk, "api_secret_key", "d627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480") }.not_to(raise_error)
       end
 
-      it 'returns an STK Object' do
-        expect(k2_process_result.process(stk, 'api_secret_key', 'd627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480')).instance_of?(K2ConnectRuby::K2Services::Payloads::Transactions::IncomingPayment)
+      it "returns an STK Object" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        stk_obj = k2_process_result.process(stk, "api_secret_key", "d627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480")
+        aggregate_failures do
+          expect(stk_obj).instance_of?(K2ConnectRuby::K2Services::Payloads::Transactions::IncomingPayment)
+          expect(stk_obj).to(be_valid)
+        end
       end
     end
 
-    context 'Process Send Money Result' do
-      it 'processes successfully' do
-        expect { k2_process_result.process(external_wallet_send_money_result.as_json, 'api_secret_key', 'c114f0740688f1a08620c7c4abaa4f2388110f0ea86334903dec4c9a0fdaecfb') }.not_to(raise_error)
+    context "Process Send Money Result" do
+      it "processes successfully" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        expect { k2_process_result.process(external_wallet_send_money_result.as_json, "api_secret_key", "c114f0740688f1a08620c7c4abaa4f2388110f0ea86334903dec4c9a0fdaecfb") }.not_to(raise_error)
       end
 
-      it 'returns an Send Money Payment Object' do
-        expect(k2_process_result.process(external_wallet_send_money_result.as_json, 'api_secret_key', 'c114f0740688f1a08620c7c4abaa4f2388110f0ea86334903dec4c9a0fdaecfb')).instance_of?(K2ConnectRuby::K2Services::Payloads::Transactions::SendMoneyPayment)
+      it "returns an Send Money Payment Object" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        send_money_obj = k2_process_result.process(external_wallet_send_money_result.as_json, "api_secret_key", "c114f0740688f1a08620c7c4abaa4f2388110f0ea86334903dec4c9a0fdaecfb")
+        aggregate_failures do
+          expect(send_money_obj).instance_of?(K2ConnectRuby::K2Services::Payloads::Transactions::SendMoneyPayment)
+          expect(send_money_obj).to(be_valid)
+        end
+      end
+    end
+
+    context "Process Reversal" do
+      it "processes successfully" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        expect { k2_process_result.process(reversal, "api_secret_key", "d627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480") }.not_to(raise_error)
+      end
+
+      it "returns a valid Reversal Object" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        reversal_obj = k2_process_result.process(reversal, "api_secret_key", "d627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480")
+        aggregate_failures do
+          expect(reversal_obj).instance_of?(K2ConnectRuby::K2Services::Payloads::Transactions::Reversal)
+          expect(reversal_obj).to(be_valid)
+        end
+      end
+    end
+
+    context "Process Payment link" do
+      it "processes successfully" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        expect { k2_process_result.process(payment_link, "api_secret_key", "d627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480") }.not_to(raise_error)
+      end
+
+      it "returns a valid Payment Link Object" do
+        allow(K2ConnectRuby::K2Utilities::K2Authenticator).to(receive(:authenticate).and_return(true))
+        payment_link_obj = k2_process_result.process(payment_link, "api_secret_key", "d627df47431db2814673efdcb3e76a6c96a4ed12b18f36716b4ca3f9f983b480")
+        aggregate_failures do
+          expect(payment_link_obj).instance_of?(K2ConnectRuby::K2Services::Payloads::Transactions::PaymentLink)
+          expect(payment_link_obj).to(be_valid)
+        end
       end
     end
   end
 
-  describe '#check_type' do
-    it 'should raise an error if event_type is not specified' do
-      expect { k2_process_result.check_type({the_body: {event: nil} } ) }.to raise_error ArgumentError
+  describe "#check_type" do
+    it "should raise an error if event_type is not specified" do
+      expect { k2_process_result.check_type({ the_body: { event: nil } } ) }.to(raise_error(ArgumentError))
     end
   end
 
-  describe '#return_hash' do
-    it 'returns a hash object' do
-      expect(k2_process_result.return_obj_hash(K2ConnectRuby::K2Services::Payloads::Transactions::OutgoingPayment.new(pay))).to be_instance_of(HashWithIndifferentAccess)
+  describe "#return_hash" do
+    it "returns a hash object" do
+      expect(k2_process_result.return_obj_hash(K2ConnectRuby::K2Services::Payloads::Transactions::OutgoingPayment.new(pay))).to(be_instance_of(HashWithIndifferentAccess))
     end
   end
 end

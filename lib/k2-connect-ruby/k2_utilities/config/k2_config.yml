@@ -10,7 +10,7 @@ endpoints: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   send_money: api/v2/send_money
   incoming_payments: api/v2/incoming_payments
   reversals: api/v2/reversals
-  payment_links: /api/v2/payment_links
+  payment_links: "/api/v2/payment_links"
   settlement_mobile_wallet: api/v2/merchant_wallets
   settlement_bank_account: api/v2/merchant_bank_accounts
   poll: api/v2/polling
