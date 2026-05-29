@@ -20,7 +20,7 @@ module K2ConnectRuby
               "buygoods_transaction_reversed",
               "card_transaction_received",
               "card_transaction_voided",
-              "card_transaction_reversed"
+              "card_transaction_reversed",
             ],
             message: "is invalid",
           }

@@ -13,7 +13,7 @@ module K2ConnectRuby
           validates :phone_number, presence: true, length: { maximum: 13 }
           validates :email, format: {
             with: URI::MailTo::EMAIL_REGEXP,
-            message: "is invalid."
+            message: "is invalid.",
           }
 
           validates_with K2ConnectRuby::K2Utilities::PhoneNumberValidator

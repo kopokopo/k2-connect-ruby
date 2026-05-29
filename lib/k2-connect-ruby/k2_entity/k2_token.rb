@@ -18,7 +18,7 @@ module K2ConnectRuby
       end
 
       def revoke_token(access_token)
-        result = K2ConnectRuby::K2Services::SendRevokeTokenRequestService.call(@client_id, @client_secret, access_token)
+        K2ConnectRuby::K2Services::SendRevokeTokenRequestService.call(@client_id, @client_secret, access_token)
 
         true
       end

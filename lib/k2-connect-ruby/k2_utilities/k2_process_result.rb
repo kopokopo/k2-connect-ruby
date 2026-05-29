@@ -32,7 +32,7 @@ module K2ConnectRuby
       # Returns a Hash Object
       def return_obj_hash(obj, instance_hash = HashWithIndifferentAccess.new)
         obj.instance_variables.each do |value|
-          instance_hash[:"#{value.to_s.tr('@', '')}"] = obj.instance_variable_get(value)
+          instance_hash[:"#{value.to_s.tr("@", "")}"] = obj.instance_variable_get(value)
         end
         instance_hash.each(&:freeze).freeze
       end

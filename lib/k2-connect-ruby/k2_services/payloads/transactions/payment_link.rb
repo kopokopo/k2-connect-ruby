@@ -8,10 +8,30 @@ module K2ConnectRuby
         class PaymentLink
           include ActiveModel::Validations
 
-          attr_reader :id, :type, :status, :created_at, :till_name, :currency, :amount, :payment_reference, :note,
-            :payment_link, :request_errors, :metadata, :callback_url, :links_self
+          attr_reader :id,
+            :type,
+            :status,
+            :created_at,
+            :till_name,
+            :currency,
+            :amount,
+            :payment_reference,
+            :note,
+            :payment_link,
+            :request_errors,
+            :metadata,
+            :callback_url,
+            :links_self
 
-          validates :id, :type, :status, :created_at, :till_name, :currency, :amount, :callback_url, :links_self,
+          validates :id,
+            :type,
+            :status,
+            :created_at,
+            :till_name,
+            :currency,
+            :amount,
+            :callback_url,
+            :links_self,
             presence: :true
           validates :type, comparison: { equal_to: "payment_link" }
 

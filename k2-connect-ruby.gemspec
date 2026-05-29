@@ -16,7 +16,6 @@ Gem::Specification.new do |spec|
   spec.license               = "MIT"
   spec.required_ruby_version = [">= 3.3.5", "<= 3.4.7"]
 
-
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
@@ -39,7 +38,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-
   spec.add_dependency("activemodel", [">= 7.2.2", "<= 8.1.1"])
   spec.add_dependency("activesupport", [">= 7.2.2", "<= 8.1.1"])
   spec.add_dependency("json", "~> 2.8.2")
@@ -50,8 +48,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("guard-rspec", "~> 4.7.3")
   spec.add_development_dependency("rake", "~> 13.2.1")
   spec.add_development_dependency("rspec", "~> 3.13.0")
+  spec.add_development_dependency("rspec_junit_formatter", "~> 0.6.0")
   spec.add_development_dependency("rspec-nc", "~> 0.3.0")
-  spec.add_development_dependency("rubocop", "~> 1.80.1")
   spec.add_development_dependency("rubocop-shopify", "~> 2.17.1")
   spec.add_development_dependency("vcr", "~> 6.3.1")
   spec.add_development_dependency("webmock", "~> 3.24")

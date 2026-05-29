@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # RSpec.describe "Results" do
 #   let(:the_body) { {the_body: "the_body"} }
 #   describe K2Payment do

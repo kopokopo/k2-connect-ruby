@@ -8,10 +8,26 @@ module K2ConnectRuby
         class Reversal
           include ActiveModel::Validations
 
-          attr_reader :id, :type, :transaction_reference, :reason, :status, :created_at, :reversal_bulk_payment,
-            :request_errors, :metadata, :callback_url, :links_self
+          attr_reader :id,
+            :type,
+            :transaction_reference,
+            :reason,
+            :status,
+            :created_at,
+            :reversal_bulk_payment,
+            :request_errors,
+            :metadata,
+            :callback_url,
+            :links_self
 
-          validates :id, :type, :transaction_reference, :reason, :status, :created_at, :callback_url, :links_self,
+          validates :id,
+            :type,
+            :transaction_reference,
+            :reason,
+            :status,
+            :created_at,
+            :callback_url,
+            :links_self,
             presence: true
           validates :type, comparison: { equal_to: "reversal" }
 

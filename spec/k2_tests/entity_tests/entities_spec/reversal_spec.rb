@@ -260,4 +260,3 @@ RSpec.describe(K2ConnectRuby::K2Entity::Reversal) do
     }
   end
 end
-
