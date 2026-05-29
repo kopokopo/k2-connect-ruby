@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "master"
+      - "development"
+
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [1, 2]
+
+    env:
+      TERM: xterm
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.5
+          bundler-cache: false
+
+      - name: Cache bundle dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: v1-dependencies-${{ runner.os }}-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: |
+            v1-dependencies-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+
+      - name: Run Rubocop
+        run: |
+          echo "Running Rubocop to check for style violations..."
+          bundle exec rubocop --parallel
+
+      - name: Run tests
+        env:
+          KNAPSACK_PRO_CI_NODE_TOTAL: 2
+          KNAPSACK_PRO_CI_NODE_INDEX: ${{ strategy.job-index }}
+        run: |
+          echo "$TERM is set to: $TERM"
+
+          mkdir -p /tmp/test-results
+
+          TEST_FILES=$(find spec -name '*_spec.rb' | sort)
+
+          TEST_SPLIT=$(echo "$TEST_FILES" | awk "NR % 2 == ${{ strategy.job-index }}")
+
+          bundle exec rspec \
+            --format progress \
+            --format RspecJunitFormatter \
+            --out /tmp/test-results/rspec.xml \
+            $TEST_SPLIT
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ strategy.job-index }}
+          path: /tmp/test-results
