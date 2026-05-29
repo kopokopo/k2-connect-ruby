@@ -43,7 +43,6 @@ module K2ConnectRuby
           @currency = payload.dig("event", "resource", "currency")
           @status = payload.dig("event", "resource", "status")
         end
-
       end
 
       class Buygoods < K2CommonEvents

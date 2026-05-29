@@ -5,7 +5,6 @@ module K2ConnectRuby
     module Payloads
       module Transactions
         class Transfer < OutgoingTransaction
-
           def initialize(payload)
             super
           end

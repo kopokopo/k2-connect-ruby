@@ -43,7 +43,7 @@ module K2ConnectRuby
             invalid_destination_request = destination_requests.find { |request| !request.valid? }
 
             if invalid_destination_request.present?
-              invalid_destination_request.errors.full_messages.each { |message| self.errors.add(:base, message) }
+              invalid_destination_request.errors.full_messages.each { |message| errors.add(:base, message) }
             end
           end
         end

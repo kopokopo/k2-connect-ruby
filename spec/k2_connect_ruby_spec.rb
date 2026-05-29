@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Base
 require "spec_helper"
-require "k2_tests/k2-version-spec"
+require "k2_tests/k2_version_spec"
 
 # Utilities
 require "k2_tests/utility_tests/k2_config_spec"

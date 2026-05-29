@@ -39,7 +39,6 @@ module K2ConnectRuby
             @config[:network_operators]
           end
         end
-
       end
     end
   end

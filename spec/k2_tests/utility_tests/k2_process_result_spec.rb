@@ -379,7 +379,7 @@ RSpec.describe(K2ConnectRuby::K2Utilities::K2ProcessResult) do
 
   describe "#check_type" do
     it "should raise an error if event_type is not specified" do
-      expect { k2_process_result.check_type({ the_body: { event: nil } } ) }.to(raise_error(ArgumentError))
+      expect { k2_process_result.check_type({ the_body: { event: nil } }) }.to(raise_error(ArgumentError))
     end
   end
 

@@ -24,8 +24,8 @@ module K2ConnectRuby
               reason: reason,
               metadata: metadata,
               _links: {
-                callback_url: callback_url
-              }
+                callback_url: callback_url,
+              },
             }
           end
 

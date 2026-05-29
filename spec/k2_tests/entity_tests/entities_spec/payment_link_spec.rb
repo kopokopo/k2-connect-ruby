@@ -442,7 +442,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::PaymentLink) do
 
   def stub_payment_link_request
     stub_request(:post, K2ConnectRuby::K2Utilities::Config::K2Config.endpoint("payment_links"))
-      .to_return(status: 201, headers: { location: "https://sandbox.kopokopo.com/api/v2/payment_links/f387e4d7-6a32-4f2d-ba1e-809eab2d9614"})
+      .to_return(status: 201, headers: { location: "https://sandbox.kopokopo.com/api/v2/payment_links/f387e4d7-6a32-4f2d-ba1e-809eab2d9614" })
   end
 
   def stub_payment_link_cancellation_request(resource_url)

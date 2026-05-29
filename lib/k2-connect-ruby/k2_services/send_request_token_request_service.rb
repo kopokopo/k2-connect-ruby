@@ -23,7 +23,7 @@ module K2ConnectRuby
         response = K2ConnectRuby::HttpClient.post(
           endpoint,
           payload: request_body_json,
-          headers: request_headers
+          headers: request_headers,
         )
 
         CallResult.success(

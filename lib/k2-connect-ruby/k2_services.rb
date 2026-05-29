@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "k2-connect-ruby/k2_services/k2_client"
 require "k2-connect-ruby/k2_services/base_service"
 require "k2-connect-ruby/k2_services/send_k2_connect_get_request_service"

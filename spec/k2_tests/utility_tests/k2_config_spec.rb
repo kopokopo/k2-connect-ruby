@@ -1,4 +1,6 @@
-RSpec.describe K2ConnectRuby::K2Utilities::Config::K2Config do
+# frozen_string_literal: true
+
+RSpec.describe(K2ConnectRuby::K2Utilities::Config::K2Config) do
   include K2ConnectRuby::K2Utilities::Config::K2Config
   let(:k2_config) { K2ConnectRuby::K2Utilities::Config::K2Config }
 

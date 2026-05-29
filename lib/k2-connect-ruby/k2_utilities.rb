@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "k2-connect-ruby/k2_utilities/config/k2_config"
 require "k2-connect-ruby/k2_utilities/k2_url_parse"
 require "k2-connect-ruby/k2_utilities/k2_authenticator"

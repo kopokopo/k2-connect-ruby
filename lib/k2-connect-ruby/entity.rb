@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "k2-connect-ruby/k2_entity/k2_entity"
 require "k2-connect-ruby/k2_entity/k2_token"
 

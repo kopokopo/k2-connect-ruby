@@ -21,7 +21,7 @@ module K2ConnectRuby
       def send_request
         response = K2ConnectRuby::HttpClient.get(
           endpoint,
-          headers: request_headers
+          headers: request_headers,
         )
         CallResult.success(
           {

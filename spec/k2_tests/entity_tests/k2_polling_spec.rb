@@ -183,7 +183,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           callback_url: Faker::Internet.url,
         )
         k2_polling.poll(till_polling_payload)
-        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
         aggregate_failures do
           expect { k2_polling.query_resource }.not_to(raise_error)
           expect(k2_polling.k2_response_body).not_to(eq(nil))
@@ -204,10 +204,10 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               from_time: Time.now - 14400,
               to_time: Time.now,
               callback_url: Faker::Internet.url,
-              )
+            )
             k2_polling.poll(till_polling_payload)
-            stub_request(:get, k2_polling.location_url).to_return(status: 401, body: {data: "some_data"}.to_json)
-            expect { k2_polling.query_resource }.to(raise_error K2ConnectRuby::K2Errors::UnauthorizedError)
+            stub_request(:get, k2_polling.location_url).to_return(status: 401, body: { data: "some_data" }.to_json)
+            expect { k2_polling.query_resource }.to(raise_error(K2ConnectRuby::K2Errors::UnauthorizedError))
           end
         end
 
@@ -223,10 +223,10 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               from_time: Time.now - 14400,
               to_time: Time.now,
               callback_url: Faker::Internet.url,
-              )
+            )
             k2_polling.poll(till_polling_payload)
             stub_request(:get, k2_polling.location_url).to_timeout
-            expect { k2_polling.query_resource }.to(raise_error K2ConnectRuby::K2Errors::TimeoutError)
+            expect { k2_polling.query_resource }.to(raise_error(K2ConnectRuby::K2Errors::TimeoutError))
           end
         end
 
@@ -242,10 +242,10 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
               from_time: Time.now - 14400,
               to_time: Time.now,
               callback_url: Faker::Internet.url,
-              )
+            )
             k2_polling.poll(till_polling_payload)
             stub_request(:get, k2_polling.location_url).to_raise(Errno::ECONNREFUSED)
-            expect { k2_polling.query_resource }.to(raise_error K2ConnectRuby::K2Errors::ConnectionError)
+            expect { k2_polling.query_resource }.to(raise_error(K2ConnectRuby::K2Errors::ConnectionError))
           end
         end
       end
@@ -265,7 +265,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           callback_url: Faker::Internet.url,
         )
         k2_polling.poll(till_polling_payload)
-        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
         aggregate_failures do
           expect { k2_polling.query_resource_url(k2_polling.location_url) }.not_to(raise_error)
           expect(k2_polling.k2_response_body).not_to(eq(nil))
@@ -413,7 +413,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           callback_url: Faker::Internet.url,
         )
         k2_polling.poll(company_polling_payload)
-        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
         aggregate_failures do
           expect { k2_polling.query_resource }.not_to(raise_error)
           expect(k2_polling.k2_response_body).not_to(eq(nil))
@@ -436,7 +436,7 @@ RSpec.describe(K2ConnectRuby::K2Entity::K2Polling) do
           callback_url: Faker::Internet.url,
         )
         k2_polling.poll(company_polling_payload)
-        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: {data: "some_data"}.to_json)
+        stub_request(:get, k2_polling.location_url).to_return(status: 200, body: { data: "some_data" }.to_json)
         aggregate_failures do
           expect { k2_polling.query_resource_url(k2_polling.location_url) }.not_to(raise_error)
           expect(k2_polling.k2_response_body).not_to(eq(nil))

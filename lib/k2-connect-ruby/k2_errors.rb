@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module K2ConnectRuby
-
   module K2Errors
-
     class Error < StandardError; end
     class TimeoutError < Error; end
     class NotFoundError < Error; end
