@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    k2-connect-ruby (4.0.1)
+    k2-connect-ruby (4.0.3)
       activemodel (>= 7.2.2)
       activesupport (>= 7.2.2)
       json (~> 2.8.2)
